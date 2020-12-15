@@ -1,53 +1,65 @@
-@extends('layouts.app')
+@extends('layouts.template-sign')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-                        <input type="hidden" name="token" value="{{ $token }}">
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" required autofocus>
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+<div class="panel panel-sign">
+    <div class="panel-title-sign mt-xl text-right">
+        <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-envelope mr-xs"></i> {{ __('Reset Password') }}</h2>
+    </div>
+    <div class="panel-body">
+        <form action="{{ route('password.update') }}" method="POST">
+            @csrf
+            <div class="form-group mb-lg">
+                <label>Email</label>
+                <div class="input-group input-group-icon">
+                    <input name="email" type="email" class="form-control input-lg {{ $errors->has('email') ? 'has-error' : '' }}" value="{{ $email ?? old('email') }}" required autofocus />
+                    <span class="input-group-addon">
+                        <span class="icon icon-lg">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                    </span>
+                </div>
+                @if ($errors->has('email'))
+                <label class="error">{{ $errors->first('email') }}</label>
+                @endif
+            </div>
+            <div class="form-group mb-lg {{ $errors->has('password') ? 'has-error' : '' }}">
+                <div class="clearfix">
+                    <label class="pull-left">Kata Sandi</label>
+                </div>
+                <div class="input-group input-group-icon">
+                    <input name="password" type="password" class="form-control input-lg" required />
+                    <span class="input-group-addon">
+                        <span class="icon icon-lg">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </span>
+                </div>
+                @if ($errors->has('password'))
+                <label class="error">{{ $errors->first('password') }}</label>
+                @endif
+            </div>
+            <div class="form-group mb-lg">
+                <div class="clearfix">
+                    <label class="pull-left">Konfirmasi Kata Sandi</label>
+                </div>
+                <div class="input-group input-group-icon">
+                    <input name="password_confirmation" type="password" class="form-control input-lg" required />
+                    <span class="input-group-addon">
+                        <span class="icon icon-lg">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </span>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <button type="submit" class="btn btn-primary hidden-xs">Reset Password</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Reset Password</button>
+                </div>
+                <div class="col-sm-12 text-left">
+                    <a href="{{ route('login') }}">Login</a>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

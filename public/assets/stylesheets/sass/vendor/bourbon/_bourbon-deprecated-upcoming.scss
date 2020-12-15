@@ -1,0 +1,4 @@
+@mixin inline-block {
+  display: inline-block;
+  @warn "inline-block mixin is deprecated and will be removed in the next major version release";
+}
