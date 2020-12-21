@@ -1,37 +1,266 @@
+/*! nanoScrollerJS - v0.8.0 - 2014
+* http://jamesflorentino.github.com/nanoScrollerJS/
+* Copyright (c) 2014 James Florentino; Licensed MIT */
 (function($, window, document) {
   "use strict";
   var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
   defaults = {
+
+    /**
+      a classname for the pane element.
+      @property paneClass
+      @type String
+      @default 'nano-pane'
+     */
     paneClass: 'nano-pane',
+
+    /**
+      a classname for the slider element.
+      @property sliderClass
+      @type String
+      @default 'nano-slider'
+     */
     sliderClass: 'nano-slider',
+
+    /**
+      a classname for the content element.
+      @property contentClass
+      @type String
+      @default 'nano-content'
+     */
     contentClass: 'nano-content',
+
+    /**
+      a setting to enable native scrolling in iOS devices.
+      @property iOSNativeScrolling
+      @type Boolean
+      @default false
+     */
     iOSNativeScrolling: false,
+
+    /**
+      a setting to prevent the rest of the page being
+      scrolled when user scrolls the `.content` element.
+      @property preventPageScrolling
+      @type Boolean
+      @default false
+     */
     preventPageScrolling: false,
+
+    /**
+      a setting to disable binding to the resize event.
+      @property disableResize
+      @type Boolean
+      @default false
+     */
     disableResize: false,
+
+    /**
+      a setting to make the scrollbar always visible.
+      @property alwaysVisible
+      @type Boolean
+      @default false
+     */
     alwaysVisible: false,
+
+    /**
+      a default timeout for the `flash()` method.
+      @property flashDelay
+      @type Number
+      @default 1500
+     */
     flashDelay: 1500,
+
+    /**
+      a minimum height for the `.slider` element.
+      @property sliderMinHeight
+      @type Number
+      @default 20
+     */
     sliderMinHeight: 20,
+
+    /**
+      a maximum height for the `.slider` element.
+      @property sliderMaxHeight
+      @type Number
+      @default null
+     */
     sliderMaxHeight: null,
+
+    /**
+      an alternate document context.
+      @property documentContext
+      @type Document
+      @default null
+     */
     documentContext: null,
+
+    /**
+      an alternate window context.
+      @property windowContext
+      @type Window
+      @default null
+     */
     windowContext: null
   };
+
+  /**
+    @property SCROLLBAR
+    @type String
+    @static
+    @final
+    @private
+   */
   SCROLLBAR = 'scrollbar';
+
+  /**
+    @property SCROLL
+    @type String
+    @static
+    @final
+    @private
+   */
   SCROLL = 'scroll';
+
+  /**
+    @property MOUSEDOWN
+    @type String
+    @final
+    @private
+   */
   MOUSEDOWN = 'mousedown';
+
+  /**
+    @property MOUSEMOVE
+    @type String
+    @static
+    @final
+    @private
+   */
   MOUSEMOVE = 'mousemove';
+
+  /**
+    @property MOUSEWHEEL
+    @type String
+    @final
+    @private
+   */
   MOUSEWHEEL = 'mousewheel';
+
+  /**
+    @property MOUSEUP
+    @type String
+    @static
+    @final
+    @private
+   */
   MOUSEUP = 'mouseup';
+
+  /**
+    @property RESIZE
+    @type String
+    @final
+    @private
+   */
   RESIZE = 'resize';
+
+  /**
+    @property DRAG
+    @type String
+    @static
+    @final
+    @private
+   */
   DRAG = 'drag';
+
+  /**
+    @property UP
+    @type String
+    @static
+    @final
+    @private
+   */
   UP = 'up';
+
+  /**
+    @property PANEDOWN
+    @type String
+    @static
+    @final
+    @private
+   */
   PANEDOWN = 'panedown';
+
+  /**
+    @property DOMSCROLL
+    @type String
+    @static
+    @final
+    @private
+   */
   DOMSCROLL = 'DOMMouseScroll';
+
+  /**
+    @property DOWN
+    @type String
+    @static
+    @final
+    @private
+   */
   DOWN = 'down';
+
+  /**
+    @property WHEEL
+    @type String
+    @static
+    @final
+    @private
+   */
   WHEEL = 'wheel';
+
+  /**
+    @property KEYDOWN
+    @type String
+    @static
+    @final
+    @private
+   */
   KEYDOWN = 'keydown';
+
+  /**
+    @property KEYUP
+    @type String
+    @static
+    @final
+    @private
+   */
   KEYUP = 'keyup';
+
+  /**
+    @property TOUCHMOVE
+    @type String
+    @static
+    @final
+    @private
+   */
   TOUCHMOVE = 'touchmove';
+
+  /**
+    @property BROWSER_IS_IE7
+    @type Boolean
+    @static
+    @final
+    @private
+   */
   BROWSER_IS_IE7 = window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject;
+
+  /**
+    @property BROWSER_SCROLLBAR_WIDTH
+    @type Number
+    @static
+    @default null
+    @private
+   */
   BROWSER_SCROLLBAR_WIDTH = null;
   rAF = window.requestAnimationFrame;
   cAF = window.cancelAnimationFrame;
@@ -59,6 +288,14 @@
   };
   transform = _prefixStyle('transform');
   hasTransform = transform !== false;
+
+  /**
+    Returns browser's native scrollbar width
+    @method getBrowserScrollbarWidth
+    @return {Number} the scrollbar width in pixels
+    @static
+    @private
+   */
   getBrowserScrollbarWidth = function() {
     var outer, outerStyle, scrollbarWidth;
     outer = document.createElement('div');
@@ -86,6 +323,13 @@
     }
     return isOSXFF && +version > 23;
   };
+
+  /**
+    @class NanoScroll
+    @param element {HTMLElement|Node} the main element
+    @param options {Object} nanoScroller's options
+    @constructor
+   */
   NanoScroll = (function() {
     function NanoScroll(el, options) {
       this.el = el;
@@ -107,6 +351,17 @@
       this.addEvents();
       this.reset();
     }
+
+
+    /**
+      Prevents the rest of the page being scrolled
+      when user scrolls the `.nano-content` element.
+      @method preventScrolling
+      @param event {Event}
+      @param direction {String} Scroll direction (up or down)
+      @private
+     */
+
     NanoScroll.prototype.preventScrolling = function(e, direction) {
       if (!this.isActive) {
         return;
@@ -124,6 +379,14 @@
         }
       }
     };
+
+
+    /**
+      Enable iOS native scrolling
+      @method nativeScrolling
+      @private
+     */
+
     NanoScroll.prototype.nativeScrolling = function() {
       this.$content.css({
         WebkitOverflowScrolling: 'touch'
@@ -131,6 +394,15 @@
       this.iOSNativeScrolling = true;
       this.isActive = true;
     };
+
+
+    /**
+      Updates those nanoScroller properties that
+      are related to current scrollbar position.
+      @method updateScrollValues
+      @private
+     */
+
     NanoScroll.prototype.updateScrollValues = function() {
       var content, direction;
       content = this.content;
@@ -151,6 +423,15 @@
         this.sliderTop = this.maxScrollTop === 0 ? 0 : this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
       }
     };
+
+
+    /**
+      Updates CSS styles for current scroll position.
+      Uses CSS 2d transfroms and `window.requestAnimationFrame` if available.
+      @method setOnScrollStyles
+      @private
+     */
+
     NanoScroll.prototype.setOnScrollStyles = function() {
       var cssValue;
       if (hasTransform) {
@@ -174,6 +455,14 @@
         this.slider.css(cssValue);
       }
     };
+
+
+    /**
+      Creates event related methods
+      @method createEvents
+      @private
+     */
+
     NanoScroll.prototype.createEvents = function() {
       this.events = {
         down: (function(_this) {
@@ -264,6 +553,14 @@
         })(this)
       };
     };
+
+
+    /**
+      Adds event listeners with jQuery.
+      @method addEvents
+      @private
+     */
+
     NanoScroll.prototype.addEvents = function() {
       var events;
       this.removeEvents();
@@ -277,6 +574,14 @@
       }
       this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
+
+
+    /**
+      Removes event listeners with jQuery.
+      @method removeEvents
+      @private
+     */
+
     NanoScroll.prototype.removeEvents = function() {
       var events;
       events = this.events;
@@ -287,6 +592,15 @@
       }
       this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
     };
+
+
+    /**
+      Generates nanoScroller's scrollbar and elements for it.
+      @method generate
+      @chainable
+      @private
+     */
+
     NanoScroll.prototype.generate = function() {
       var contentClass, cssRule, currentPadding, options, pane, paneClass, sliderClass;
       options = this.options;
@@ -313,6 +627,13 @@
       }
       return this;
     };
+
+
+    /**
+      @method restore
+      @private
+     */
+
     NanoScroll.prototype.restore = function() {
       this.stopped = false;
       if (!this.iOSNativeScrolling) {
@@ -320,6 +641,16 @@
       }
       this.addEvents();
     };
+
+
+    /**
+      Resets nanoScroller's scrollbar.
+      @method reset
+      @chainable
+      @example
+          $(".nano").nanoScroller();
+     */
+
     NanoScroll.prototype.reset = function() {
       var content, contentHeight, contentPosition, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, parentMaxHeight, right, sliderHeight;
       if (this.iOSNativeScrolling) {
@@ -392,6 +723,15 @@
       }
       return this;
     };
+
+
+    /**
+      @method scroll
+      @private
+      @example
+          $(".nano").nanoScroller({ scroll: 'top' });
+     */
+
     NanoScroll.prototype.scroll = function() {
       if (!this.isActive) {
         return;
@@ -405,6 +745,17 @@
       }
       return this;
     };
+
+
+    /**
+      Scroll at the bottom with an offset value
+      @method scrollBottom
+      @param offsetY {Number}
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollBottom: value });
+     */
+
     NanoScroll.prototype.scrollBottom = function(offsetY) {
       if (!this.isActive) {
         return;
@@ -413,6 +764,17 @@
       this.stop().restore();
       return this;
     };
+
+
+    /**
+      Scroll at the top with an offset value
+      @method scrollTop
+      @param offsetY {Number}
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollTop: value });
+     */
+
     NanoScroll.prototype.scrollTop = function(offsetY) {
       if (!this.isActive) {
         return;
@@ -421,6 +783,17 @@
       this.stop().restore();
       return this;
     };
+
+
+    /**
+      Scroll to an element
+      @method scrollTo
+      @param node {Node} A node to scroll to.
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollTo: $('#a_node') });
+     */
+
     NanoScroll.prototype.scrollTo = function(node) {
       if (!this.isActive) {
         return;
@@ -428,6 +801,17 @@
       this.scrollTop(this.$el.find(node).get(0).offsetTop);
       return this;
     };
+
+
+    /**
+      To stop the operation.
+      This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
+      @method stop
+      @chainable
+      @example
+          $(".nano").nanoScroller({ stop: true });
+     */
+
     NanoScroll.prototype.stop = function() {
       if (cAF && this.scrollRAF) {
         cAF(this.scrollRAF);
@@ -440,6 +824,16 @@
       }
       return this;
     };
+
+
+    /**
+      Destroys nanoScroller and restores browser's native scrollbar.
+      @method destroy
+      @chainable
+      @example
+          $(".nano").nanoScroller({ destroy: true });
+     */
+
     NanoScroll.prototype.destroy = function() {
       if (!this.stopped) {
         this.stop();
@@ -459,6 +853,17 @@
       }
       return this;
     };
+
+
+    /**
+      To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).
+      Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
+      @method flash
+      @chainable
+      @example
+          $(".nano").nanoScroller({ flash: true });
+     */
+
     NanoScroll.prototype.flash = function() {
       if (this.iOSNativeScrolling) {
         return;
@@ -475,7 +880,9 @@
       })(this), this.options.flashDelay);
       return this;
     };
+
     return NanoScroll;
+
   })();
   $.fn.nanoScroller = function(settings) {
     return this.each(function() {
@@ -519,3 +926,5 @@
   };
   $.fn.nanoScroller.Constructor = NanoScroll;
 })(jQuery, window, document);
+
+//# sourceMappingURL=jquery.nanoscroller.js.map

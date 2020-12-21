@@ -7,12 +7,9 @@ class User extends Authenticatable
 {
     use Notifiable;
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'profile_id'
+        'name', 'email', 'password',
     ];
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function profile(){
-        return $this->belongsTo('App\Models\Profile');
-    }
 }
