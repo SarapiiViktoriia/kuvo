@@ -12,7 +12,10 @@
             <nav class="nav-main" id="menu" role="navigation">
                 <ul class="nav nav-main">
                     <li>
-                        <a href="#"><i class="fa fa-home" aria-hidden="true"></i> <span>Dashboard</span></a>
+                        <a href="{{ route('home') }}">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </a>
                     </li>
                 </ul>
             </nav>

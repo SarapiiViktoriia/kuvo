@@ -1,4 +1,4 @@
-<div class="form-group mb-lg">
+<div class="form-group mb-lg {{ $errors->has($name) ? 'has-error' : '' }}">
     <label for="{{ $name }}">{{ $label }}</label>
     <div class="input-group input-group-icon">
         <span class="input-group-addon">
