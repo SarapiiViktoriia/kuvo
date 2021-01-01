@@ -18,5 +18,9 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'ajax/', 'as' => 'ajax.' ], f
 	Route::post('/get-permissions-from-roles', 'RoleController@getPermissionsFromRoles')->name('get_permissions_from_roles');
 	Route::post('/get-profiles', 'ProfileController@anyData')->name('profiles.data');
 	Route::post('/get-roles', 'RoleController@anyData')->name('roles.data');
+	Route::post('/get-suppliers', 'SupplierController@anyData')->name('suppliers.data');
 	Route::post('/get-users', 'UserController@anyData')->name('users.data');
+});
+Route::group(['middleware' => 'auth'], function (){
+	Route::resource('suppliers', 'SupplierController');
 });

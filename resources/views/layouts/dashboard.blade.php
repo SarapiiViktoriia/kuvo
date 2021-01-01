@@ -43,6 +43,14 @@
         <script src="{{ asset('assets/javascripts/theme.js') }}"></script>
         <script src="{{ asset('assets/javascripts/theme.custom.js') }}"></script>
         <script src="{{ asset('assets/javascripts/theme.init.js') }}"></script>
+        <script type="text/javascript">
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var APP_URL = {!! json_encode(url('/')) !!};
+        </script>
         @stack('themescripts')
         @stack('appscripts')
     </body>

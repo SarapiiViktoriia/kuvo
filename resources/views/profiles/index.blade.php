@@ -13,6 +13,7 @@
 	</header>
 	<div class="panel-body">
 		<a class="mb-xs mt-xs mr-xs btn btn-primary" href="#modal-add-profile" id="magnific-modal-add-profile">Tambah</a>
+		<button type="button" class="btn btn-primary btn-modal-add" data-toggle="modal" data-target="#modal-add-profile">Tambah</button>
 		@component('components.datatable-ajax', [
 		'table_id' => 'profiles',
 		'table_headers' => ['name', 'akun'],

@@ -1,17 +1,17 @@
-<div id="{{ $modal_id }}" class="modal-block mfp-hide">
-	<section class="panel">
-		<header class="panel-heading">
-			<h2 class="panel-title">{{ $modal_title }}</h2>
-		</header>
-		<div class="panel-body">
-			{{ $modal_body }}
-		</div>
-		<footer class="panel-footer">
-			<div class="row">
-				<div class="col-md-12 text-right">
-					{{ $modal_button }}
-				</div>
+<div class="modal fade" id="{{ $modal_id }}" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">{{ $modal_title }}</h4>
 			</div>
-		</footer>
-	</section>
+			<div class="modal-body">
+				{{ $modal_body }}
+			</div>
+			<div class="modal-footer">
+				{{ $modal_button }}
+			</div>
+		</div>
+	</div>
 </div>

@@ -11,7 +11,7 @@
 		</tr>
 	</thead>
 </table>
-@push('scripts')
+@push('appscripts')
 <script>
 	var table;
 	$(function() {

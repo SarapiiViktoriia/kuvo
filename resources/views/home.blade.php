@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @extends('layouts.dashboard')
 @section('content')
     @if (session('status'))
@@ -27,6 +26,3 @@
         @endcomponent
     </div>
 @endsection
-=======
-@extends('layouts.template', ['header' => 'Dashboard'])
->>>>>>> user-management

@@ -1,6 +1,7 @@
-@extends('layouts.template', ['header' => 'User', 'datatables' => TRUE])
-@push('css')
+@extends('layouts.dashboard', ['page_title' => 'Users'])
+@push('vendorstyles')
 <link rel="stylesheet" href="{{ asset('assets/vendor/pnotify/pnotify.custom.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datatables-bs3/assets/css/datatables.css') }}" />
 @endpush
 @section('content')
 <section class="panel">
@@ -33,7 +34,9 @@
 	</div>
 </section>
 @endsection
-@push('scripts')
+@push('appscripts')
+<script src="{{ asset('assets/vendor/jquery-datatables/media/js/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('assets/vendor/jquery-datatables-bs3/assets/js/datatables.js') }}"></script>
 <script src="{{ asset('assets/vendor/pnotify/pnotify.custom.js') }}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
