@@ -21,6 +21,7 @@
 			<option value="{{ $key }}">{{ $value }}</option>
 			@endforeach
 		</select>
+		<label class="error" id="label_item_group_id"></label>
 	</div>
 </div>
 <div class="form-group mt-lg" id="div_item_brand_id">
@@ -32,6 +33,7 @@
 			<option value="{{ $key }}">{{ $value }}</option>
 			@endforeach
 		</select>
+		<label class="error" id="label_item_brand_id"></label>
 	</div>
 </div>
 <div class="form-group mt-lg" id="div_supplier_id">
@@ -42,6 +44,7 @@
 				<option value="{{ $key }}">{{ $value }}</option>
 			@endforeach
 		</select>
+		<label class="error" id="label_supplier_id"></label>
 	</div>
 </div>
 <div class="form-group mt-lg" id="div_image_url">

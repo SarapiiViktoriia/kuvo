@@ -42,7 +42,9 @@ class ItemController extends Controller
         $this->validate($request, [
             'code' => 'required|unique:items',
             'name' => 'required',
-            'image_url' => 'nullable|url'
+            'image_url' => 'nullable|url',
+            'item_group_id' => 'required',
+            'item_brand_id' => 'required'
         ]);
         $item = Item::create($request->except('supplier_id'));
         $item->suppliers()->sync($request->supplier_id ? $request->supplier_id : []);
@@ -63,7 +65,9 @@ class ItemController extends Controller
         $this->validate($request, [
             'code' => 'required|unique:items,code,'.$id,
             'name' => 'required',
-            'image_url' => 'nullable|url'
+            'image_url' => 'nullable|url',
+            'item_group_id' => 'required',
+            'item_brand_id' => 'required'
         ]);
         $item = Item::find($id);
         $item->update($request->except('supplier_id'));
