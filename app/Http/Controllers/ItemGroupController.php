@@ -49,7 +49,6 @@ class ItemGroupController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'parent_id' => 'not_in:'.$id
         ]);
         $item_group = ItemGroup::find($id);
         $item_group->update($request->all());

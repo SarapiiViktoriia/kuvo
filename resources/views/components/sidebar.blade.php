@@ -17,36 +17,8 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-parent">
-                        <a>
-                            <i class="fa fa-database" aria-hidden="true"></i>
-                            <span>Data Master</span>
-                        </a>
-                        <ul class="nav nav-children">
-                            <li>
-                                <a href="{{ route('items.index') }}">
-                                   Barang
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('suppliers.index') }}">
-                                   Supplier
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('item-groups.index') }}">
-                                   Grup Barang
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('item-brands.index') }}">
-                                   Brand Barang
-                                </a>
-                            </li>
-                       </ul>
-                   </li>
-               </ul>
-           </nav>
-       </div>
-   </div>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </aside>
