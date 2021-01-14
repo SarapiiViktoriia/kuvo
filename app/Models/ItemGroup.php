@@ -8,4 +8,12 @@ class ItemGroup extends Model
     {
     	return $this->belongsTo('App\Models\ItemGroup');
     }
+    public function getDescriptionAttribute($value)
+    {
+    	if ($value) {
+    		return $value;
+    	}else{
+    		return '-';
+    	}
+    }
 }

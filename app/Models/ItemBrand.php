@@ -8,4 +8,12 @@ class ItemBrand extends Model
 	{
 		return $this->hasMany('App\Models\Item');
 	}
+    public function getDescriptionAttribute($value)
+    {
+    	if ($value) {
+    		return $value;
+    	}else{
+    		return '-';
+    	}
+    }
 }

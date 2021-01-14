@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -12,7 +13,8 @@ class RoleController extends Controller
         return Datatables::of($roles)
         ->addColumn('action', function ($role) {
             $btn = '';
-            $btn .= '<a class="mb-xs mt-xs mr-xs modal-edit-role btn btn-primary" href="#modal-edit-role" data-id='.$role->id.'>Ubah</a>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-role" data-id='.$role->id.'>Ubah</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-role" data-id='.$role->id.'>Hapus</button>';
             return $btn;
         })
         ->toJson();
@@ -55,14 +57,19 @@ class RoleController extends Controller
     }
     public function destroy($id)
     {
+        $role = Role::find($id);
+        DB::table('model_has_roles')->where('role_id', $id)->delete();
+        $role->syncPermissions([]);
+        $role->delete();
+        return response()->json(['message' => 'Role '.$role->name.' berhasil dihapus', 'status' => 'destroyed']);
     }
-    public function getPermissionsFromARole($id)
+    public function fetchIdPermissionsForRole($id)
     {
         $role = Role::find($id);
         $permissions = $role->permissions()->pluck('id');
-        return response()->json(['permissions' => $permissions]);
+        return response()->json(['permission_ids' => $permissions]);
     }
-    public function getPermissionsFromRoles(Request $request)
+    public function fetchIdPermissionsForRoles(Request $request)
     {
         $roles = Role::find($request['role_ids']);
         $permission_ids = [];
@@ -75,6 +82,6 @@ class RoleController extends Controller
             }
         }
         array_unique($permission_ids);
-        return response()->json(['permissions' => $permission_ids]);
+        return response()->json(['permission_ids' => $permission_ids]);
     }
 }

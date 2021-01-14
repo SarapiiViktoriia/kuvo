@@ -41,7 +41,7 @@
 <script src="{{ asset('assets/vendor/select2/select2.js') }}"></script>
 <script type="text/javascript">
 	$(document).ready(function (){
-		function fetch_item_groups(form){
+		function fetch_item_groups(form, selected, disabled){
 			$.ajax({
 				url: '{{ route('ajax.fetch_item_groups') }}',
 				method: 'GET',
@@ -49,8 +49,15 @@
 					$('select[name="parent_id"]', form).empty();
 					$('select[name="parent_id"]', form).append($('<option value="">Parent ...</option>'));
 					$.each(response.item_groups, function(key, value){
-						$('select[name="parent_id"]', form).append($('<option value="'+key+'">' + value + '</option>'));
+						if (key == disabled) {
+							$('select[name="parent_id"]', form).append($('<option value="'+key+'" disabled>' + value + '</option>'));
+						}else{
+							$('select[name="parent_id"]', form).append($('<option value="'+key+'">' + value + '</option>'));
+						}
 					});
+					if (selected) {
+						$('select[name="parent_id"]', form).val(selected).trigger('change');
+					}
 					$('select[name="parent_id"]', form).select2({
 						dropdownParent: $(form)
 					});
@@ -63,10 +70,9 @@
 				}
 			})
 		}
-		fetch_item_groups('#form-edit-item-group');
 		$('#modal-add-item-group').on('shown.bs.modal', function(){
 			cleanModal('#form-add-item-group', true);
-			fetch_item_groups('#form-add-item-group');
+			fetch_item_groups('#form-add-item-group', null, null);
 		})
 		$('#btn-add-item-group').click(function(){
 			var form = $('#form-add-item-group');
@@ -77,7 +83,6 @@
 				success: function(response){
 					$('#modal-add-item-group').modal('hide');
 					table.ajax.reload();
-					fetch_item_groups('#form-edit-item-group');
 					new PNotify({
 						title: 'Sukses!',
 						text: 'Data grup barang berhasil ditambahkan.',
@@ -105,6 +110,7 @@
 		})
 		$('#item_groups-table tbody').on('click', 'button[name="btn-edit-item-group"]', function(){
 			var data = table.row($(this).closest('tr')).data();
+			var selected = null;
 			$.each($('input, select, textarea', '#form-edit-item-group'), function(){
 				if ($(this).attr('id')) {
 					var id_element = $(this).attr('id');
@@ -113,13 +119,15 @@
 					}else{
 						$('#'+id_element, '#form-edit-item-group').val('').trigger('change');
 					}
+					if (id_element == 'parent_id') {
+						selected = data[id_element];
+					}
 				}	
 			});
+			cleanModal('#form-edit-item-group', false);
+			fetch_item_groups('#form-edit-item-group', selected, $(this).data('id'));
 			$('#form-edit-item-group').attr('action', APP_URL + '/item-groups/'+ $(this).data('id'));
 			$('#modal-edit-item-group').modal('show');
-		})
-		$('#modal-edit-item-group').on('shown.bs.modal', function(){
-			cleanModal('#form-edit-item-group', false);
 		})
 		$('#btn-edit-item-group').click(function (){
 			var form = $('#form-edit-item-group');
@@ -130,7 +138,6 @@
 				success: function(response){
 					$('#modal-edit-item-group').modal('hide');
 					table.ajax.reload();
-					fetch_item_groups('#form-edit-item-group');
 					new PNotify({
 						title: 'Sukses!',
 						text: 'Data grup barang berhasil diubah.',
@@ -175,7 +182,6 @@
 							type: 'success',
 						});
 						table.ajax.reload();
-						fetch_item_groups('#form-edit-item-group');
 					}else{
 						new PNotify({
 							title: 'Peringatan!',

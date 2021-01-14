@@ -19,7 +19,8 @@ class UserController extends Controller
         })
         ->addColumn('action', function ($user) {
             $btn = '';
-            $btn .= '<a class="mb-xs mt-xs mr-xs magnific-modal-edit-user btn btn-default" href="#modal-edit-user" data-id='.$user->id.'>Ubah</a>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-user" data-id='.$user->id.'>Ubah</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-user" data-id='.$user->id.'>Hapus</button>';
             return $btn;
         })
         ->toJson();
@@ -35,6 +36,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'name' => 'required',
             'email' => 'required|email|unique:users',
             'username' => 'required|unique:users',
         ]);
@@ -74,5 +76,8 @@ class UserController extends Controller
     }
     public function destroy($id)
     {
+        $user = User::find($id);
+        $user->delete();
+        return response()->json(['message' => 'User '.$user->name.' berhasil dihapus', 'status' => 'destroyed']);
     }
 }

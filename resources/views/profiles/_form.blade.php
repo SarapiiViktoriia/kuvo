@@ -17,7 +17,7 @@
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-12 control-label" for="inputSuccess">Role</label>
+	<label class="col-md-12 control-label">Role</label>
 	@foreach($roles as $key => $value)
 	<div class="col-md-6">
 		<label class="checkbox-inline">
@@ -27,7 +27,7 @@
 	@endforeach
 </div>
 <div class="form-group">
-	<label class="col-md-12 control-label" for="inputSuccess">Permission</label>
+	<label class="col-md-12 control-label">Permission</label>
 	@foreach($permissions as $key => $value)
 	<div class="col-md-6">
 		<label class="checkbox-inline">

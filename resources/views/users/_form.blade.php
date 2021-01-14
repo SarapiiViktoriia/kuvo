@@ -12,7 +12,7 @@
 		<label class="error" id="label_email"></label>
 	</div>
 </div>
-<div class="form-group mt-lg" id="div_name">
+<div class="form-group mt-lg" id="div_username">
 	<label class="col-sm-3 control-label">Username</label>
 	<div class="col-sm-9">
 		<input type="text" id="username" name="username" class="form-control" required/>
@@ -28,5 +28,6 @@
 			<option value="{{ $key }}">{{ $value }}</option>
 			@endforeach
 		</select>
+		<label class="error" id="label_profile_id"></label>
 	</div>
 </div>

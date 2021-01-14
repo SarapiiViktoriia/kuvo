@@ -6,7 +6,7 @@ class Profile extends Model
 {
 	use HasRoles;
 	protected $guard_name = 'web';
-    protected $guarded = [];
+    protected $fillable = ['name', 'user_id'];
     public function user(){
     	return $this->hasOne('App\User');
     }

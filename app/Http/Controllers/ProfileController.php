@@ -17,7 +17,7 @@ class ProfileController extends Controller
         })
         ->addColumn('action', function ($profile) {
             $btn = '';
-            $btn .= '<a class="mb-xs mt-xs mr-xs magnific-modal-edit-profile btn btn-default" href="#modal-edit-profile" data-id='.$profile->id.'>Ubah</a>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-profile" data-id='.$profile->id.'>Ubah</button>';
             return $btn;
         })
         ->toJson();
@@ -63,7 +63,7 @@ class ProfileController extends Controller
         ]);
         $profile = Profile::find($id);
         $profile->update([
-            'name' => 'name'
+            'name' => $request['name'],
         ]);
         if ($request['user_id']) {
             $user = User::find($request['user_id']);
@@ -77,5 +77,22 @@ class ProfileController extends Controller
     }
     public function destroy($id)
     {
+    }
+    public function fetchIdRolesForProfile($id)
+    {
+        $profile = Profile::find($id);
+        $roles = $profile->roles()->pluck('id');
+        return response()->json(['role_ids' => $roles]);
+    }
+    public function fetchIdPermissionsForProfile($id)
+    {
+        $profile = Profile::find($id);
+        $permissions = $profile->permissions()->pluck('id');
+        return response()->json(['permission_ids' => $permissions]);
+    }
+    public function fetchProfiles()
+    {
+        $profiles = Profile::whereDoesntHave('user')->orderBy('name')->pluck('name', 'id');
+        return response()->json(['profiles' => $profiles]);
     }
 }

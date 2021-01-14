@@ -9,6 +9,10 @@ function cleanModal(form, empty){
 			$('#div_'+name_element, form).removeClass('has-error');
 			$('#label_'+name_element, form).empty();
 		}
+		if (type == 'checkbox') {
+			$(this).prop('checked', false);
+			$(this).prop('disabled', false);
+		}
 	});
 }
 $(document).on('click', '.modal-dismiss', function (e) {

@@ -3,34 +3,27 @@
 		<tr>
 			<th>No</th>
 			@foreach($table_headers as $table_header)
-				<th>{{ ucwords(e(__($table_header))) }}</th>
+			<th>{{ ucwords(e(__($table_header))) }}</th>
 			@endforeach
 			@if($condition)
-				<th class="text-center">{{ ucwords(e(__('action'))) }}</th>
+			<th style="text-align: center;">{{ ucwords(e(__('action'))) }}</th>
 			@endif
 		</tr>
 	</thead>
 </table>
-@push('vendorstyles')
-	<link rel="stylesheet" href="{{ asset('assets/vendor/select2/select2.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datatables-bs3/assets/css/datatables.css') }}">
-@endpush
-@push('vendorscripts')
-	<script src="{{ asset('assets/vendor/select2/select2.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('assets/vendor/jquery-datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
-@endpush
 @push('appscripts')
-	<script type="text/javascript">
+<script>
+	var table;
 	$(function() {
 		table = $("#{{ $table_id }}-table").DataTable({
 			processing: true,
 			serverSide: true,
 			responsive: true,
 			ajax: {
-					url: '{{ route('ajax.'.$table_id.'.data') }}',
-					dataType: "json",
-					type: "POST",
-					data: function(d) {
+				url : '{{ route('ajax.'.$table_id.'.data') }}',
+				dataType : "json",
+				type : "POST",
+				data : function(d){
 					{{ $data_send_ajax }}
 				}
 			},
@@ -47,7 +40,8 @@
 			{ responsivePriority: 1, targets: 0 },
 			],
 			order: [1, 'asc'],
-			});
+		}
+		);
 		table.on('draw.dt', function () {
 			var info = table.page.info();
 			table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {

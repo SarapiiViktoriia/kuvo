@@ -10,13 +10,17 @@ if (config('app.env') == 'local') {
     })->middleware('auth');
 }
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('profiles', 'ProfileController');
-Route::resource('roles', 'RoleController');
-Route::resource('users', 'UserController');
 Route::group([ 'middleware' => 'auth', 'prefix' => 'ajax/', 'as' => 'ajax.' ], function(){
+	Route::get('/fetch-id-permissions-for-profile/{id}', 'ProfileController@fetchIdPermissionsForProfile');
+	Route::get('/fetch-id-permissions-for-role/{id}', 'RoleController@fetchIdPermissionsForRole');
+	Route::post('/fetch-id-permissions-for-roles', 'RoleController@fetchIdPermissionsForRoles');
+	Route::get('/fetch-id-roles-for-profile/{id}', 'ProfileController@fetchIdRolesForProfile');
+	Route::get('/fetch-id-suppliers-for-item/{id}', 'ItemController@fetchIdSuppliersForItem');
+	Route::get('/fetch-item-brands', 'ItemBrandController@fetchItemBrands')->name('fetch_item_brands');
 	Route::get('/fetch-item-groups', 'ItemGroupController@fetchItemGroups')->name('fetch_item_groups');
-	Route::get('/get-permissions-from-a-role/{id}', 'RoleController@getPermissionsFromARole')->name('get_permissions_from_a_role');
-	Route::post('/get-permissions-from-roles', 'RoleController@getPermissionsFromRoles')->name('get_permissions_from_roles');
+	Route::get('/fetch-profiles', 'ProfileController@fetchProfiles')->name('fetch_profiles');
+	Route::get('/fetch-suppliers', 'SupplierController@fetchSuppliers')->name('fetch_suppliers');
+	Route::post('/get-items', 'ItemController@anyData')->name('items.data');
 	Route::post('/get-item-brands', 'ItemBrandController@anyData')->name('item_brands.data');
 	Route::post('/get-item-groups', 'ItemGroupController@anyData')->name('item_groups.data');
 	Route::post('/get-profiles', 'ProfileController@anyData')->name('profiles.data');
@@ -25,7 +29,11 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'ajax/', 'as' => 'ajax.' ], f
 	Route::post('/get-users', 'UserController@anyData')->name('users.data');
 });
 Route::group(['middleware' => 'auth'], function (){
+	Route::resource('items', 'ItemController');
 	Route::resource('item-brands', 'ItemBrandController');
 	Route::resource('item-groups', 'ItemGroupController');
+	Route::resource('profiles', 'ProfileController');
+	Route::resource('roles', 'RoleController');
 	Route::resource('suppliers', 'SupplierController');
+	Route::resource('users', 'UserController');
 });
