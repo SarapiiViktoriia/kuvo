@@ -20,6 +20,7 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'ajax/', 'as' => 'ajax.' ], f
 	Route::get('/fetch-item-groups', 'ItemGroupController@fetchItemGroups')->name('fetch_item_groups');
 	Route::get('/fetch-profiles', 'ProfileController@fetchProfiles')->name('fetch_profiles');
 	Route::get('/fetch-suppliers', 'SupplierController@fetchSuppliers')->name('fetch_suppliers');
+	Route::post('/get-inventory-units', 'InventoryUnitController@anyData')->name('inventory_units.data');
 	Route::post('/get-items', 'ItemController@anyData')->name('items.data');
 	Route::post('/get-item-brands', 'ItemBrandController@anyData')->name('item_brands.data');
 	Route::post('/get-item-groups', 'ItemGroupController@anyData')->name('item_groups.data');
@@ -29,6 +30,7 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'ajax/', 'as' => 'ajax.' ], f
 	Route::post('/get-users', 'UserController@anyData')->name('users.data');
 });
 Route::group(['middleware' => 'auth'], function (){
+	Route::resource('inventory-units', 'InventoryUnitController');
 	Route::resource('items', 'ItemController');
 	Route::resource('item-brands', 'ItemBrandController');
 	Route::resource('item-groups', 'ItemGroupController');
