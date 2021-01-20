@@ -55,4 +55,9 @@ class InventoryUnitController extends Controller
             return response()->json(['message' => 'InventoryUnit '.$inventory_unit->name.' berhasil dihapus', 'status' => 'destroyed']);
         }
     }
+    public function fetchInventoryUnits()
+    {
+        $inventory_units = InventoryUnit::pluck('name', 'id');
+        return response()->json(['inventory_units' => $inventory_units]);
+    }
 }
