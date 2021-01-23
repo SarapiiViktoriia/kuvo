@@ -4,7 +4,7 @@
 		<select class="form-control" id="parent_id" name="parent_id">
 			<option value="">Parent ...</option>
 		</select>
-		<label class="error" id="parent_id"></label>
+		<label class="error" id="label_parent_id"></label>
 	</div>
 </div>
 <div class="form-group mt-lg" id="div_name">

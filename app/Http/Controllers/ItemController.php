@@ -86,4 +86,9 @@ class ItemController extends Controller
         $data['supplier_ids'] = $item->suppliers->pluck('id');
         return response()->json(['supplier_ids' => $data['supplier_ids']]);
     }
+    public function fetchItems()
+    {
+        $items = Item::pluck('name', 'id');
+        return response()->json(['items' => $items]);
+    }
 }

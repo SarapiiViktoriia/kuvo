@@ -4,7 +4,7 @@
 		<select class="form-control" id="inventory_unit_id" name="inventory_unit_id">
 			<option value="">Inventory Unit ...</option>
 		</select>
-		<label class="error" id="inventory_unit_id"></label>
+		<label class="error" id="label_inventory_unit_id"></label>
 	</div>
 </div>
 <div class="form-group mt-lg" id="div_name">
