@@ -45,25 +45,26 @@
 							</li>
 						</ul>
 					</li>
+					<hr>
 					<li class="nav-parent">
 						<a>
 							<i class="fa fa-users" aria-hidden="true"></i>
-							<span>Data User</span>
+							<span>{{ ucwords(__('manajemen akun')) }}</span>
 						</a>
 						<ul class="nav nav-children">
 							<li>
 								<a href="{{ route('users.index') }}">
-									User
+									{{ ucwords(__('manajemen pengguna')) }}
 								</a>
 							</li>
 							<li>
 								<a href="{{ route('profiles.index') }}">
-									Profil
+									{{ ucwords(__('manajemen profil')) }}
 								</a>
 							</li>
 							<li>
 								<a href="{{ route('roles.index') }}">
-									Role
+									{{ ucwords(__('manajemen peran')) }}
 								</a>
 							</li>
 						</ul>

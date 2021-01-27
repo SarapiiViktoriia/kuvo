@@ -19,8 +19,8 @@ class UserController extends Controller
         })
         ->addColumn('action', function ($user) {
             $btn = '';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-user" data-id='.$user->id.'>Ubah</button>';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-user" data-id='.$user->id.'>Hapus</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-user" data-id='.$user->id.'>Ubah</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-danger" name="btn-destroy-user" data-id='.$user->id.'>Hapus</button>';
             return $btn;
         })
         ->toJson();
@@ -77,7 +77,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $user->delete();
-        return response()->json(['message' => 'User '.$user->name.' berhasil dihapus', 'status' => 'destroyed']);
+        if ($user->username == 'admin') {
+            return response()->json(['message' => "Maaf, pengguna $user->name tidak diperbolehkan dihapus.", 'status' => 'error']);
+        }
+        else {
+            $user->delete();
+            return response()->json(['message' => 'User '.$user->name.' berhasil dihapus', 'status' => 'destroyed']);
+        }
     }
 }

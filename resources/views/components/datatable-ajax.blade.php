@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped" id="{{ $table_id }}-table" style="width: 100%">
+<table class="table table-bordered table-striped table-condensed" id="{{ $table_id }}-table" style="width: 100%">
 	<thead>
 		<tr>
 			<th>No</th>
@@ -12,12 +12,11 @@
 	</thead>
 </table>
 @push('vendorstyles')
-	<link rel="stylesheet" href="{{ asset('assets/vendor/select2/select2.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datatables-bs3/assets/css/datatables.css') }}">
 @endpush
 @push('vendorscripts')
-	<script src="{{ asset('assets/vendor/select2/select2.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/vendor/jquery-datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('assets/vendor/jquery-datatables-bs3/assets/js/datatables.js') }}"></script>
 @endpush
 @push('appscripts')
 	<script type="text/javascript">

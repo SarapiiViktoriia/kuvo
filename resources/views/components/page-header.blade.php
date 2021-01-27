@@ -1,5 +1,5 @@
 <header class="page-header">
-    <h2 class="h2">{{ $page_title }}</h2>
+    <h2 class="h2">{{ ucwords(__($page_title)) }}</h2>
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li><a href="{{ route('home') }}"><i class="fa fa-home"></i></a></li>

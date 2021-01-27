@@ -4,7 +4,7 @@
             <div class="panel-actions">
                 <a href="#" class="fa fa-caret-down"></a>
             </div>
-            <h3 class="panel-title">{{ $panel_title }}</h3>
+            <h3 class="panel-title">{{ ucwords(__($panel_title)) }}</h3>
         </header>
     @endif
     <div class="panel-body">
