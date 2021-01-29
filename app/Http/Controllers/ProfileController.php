@@ -17,7 +17,7 @@ class ProfileController extends Controller
         })
         ->addColumn('action', function ($profile) {
             $btn = '';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-profile" data-id='.$profile->id.'>Ubah</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-profile" data-id='.$profile->id.'><span class="fa fa-edit"></span> ' . ucwords(__('ubah')) . '</button>';
             return $btn;
         })
         ->toJson();

@@ -1,18 +1,24 @@
 @extends('layouts.dashboard', ['page_title' => 'manajemen pengguna'])
 @section('content')
+	<p class="lead">
+		Di sini kamu dapat mengatur pengguna aplikasi ini. Kamu dapat melihat
+		daftar pengguna terdaftar, menambahkan pengguna, memperbarui informasi pengguna,
+		dan menghapus pengguna yang ada.
+	</p>
 	@component('components.panel',
-	['context' => '',
+	['context'    => '',
 	'panel_title' => 'daftar pengguna'])
 		<div style="margin-bottom: 2em;">
 			<button type="button" class="btn btn-primary btn-modal-add" data-toggle="modal" data-target="#modal-add-user">
-				{{ ucwords(__('tambah')) }}
+				<span class="fa fa-plus"></span>
+				{{ ucwords(__('tambah pengguna')) }}
 			</button>
 		</div>
 		@component('components.datatable-ajax',
-		['table_id' => 'users',
+		['table_id'     => 'users',
 		'table_headers' => ['name', 'email', 'username', 'profile'],
-		'condition' => true,
-		'data' => [
+		'condition'     => true,
+		'data'          => [
 			['name' => 'name', 'data' => 'name'],
 			['name' => 'email', 'data' => 'email'],
 			['name' => 'username', 'data' => 'username'],
@@ -25,6 +31,14 @@
 		@include('users.edit')
 		@include('users.destroy')
 	@endcomponent
+	<p>
+		Kamu dapat menambahkan pengguna dan mengkaitkannya
+		dengan profil pengguna yang ada. Perlu kamu ketahui,
+		kamu harus membuat profil pengguna dulu sebelum
+		bisa mengkaitkan profil. Untuk membuat profil, gunakan
+		<a href="{{ route('profiles.index') }}">modul manajemen
+		profil pengguna</a>.
+	</p>
 @endsection
 @push('vendorstyles')
 	<link rel="stylesheet" href="{{ asset('assets/vendor/pnotify/pnotify.custom.css') }}" />

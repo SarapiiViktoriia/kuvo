@@ -19,8 +19,8 @@ class UserController extends Controller
         })
         ->addColumn('action', function ($user) {
             $btn = '';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-user" data-id='.$user->id.'>Ubah</button>';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-danger" name="btn-destroy-user" data-id='.$user->id.'>Hapus</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-user" data-id='.$user->id.'><span class="fa fa-edit"></span> ' . ucwords(__('ubah')) . '</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-danger" name="btn-destroy-user" data-id='.$user->id.'><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
             return $btn;
         })
         ->toJson();

@@ -13,8 +13,8 @@ class RoleController extends Controller
         return Datatables::of($roles)
         ->addColumn('action', function ($role) {
             $btn = '';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-role" data-id='.$role->id.'>Ubah</button>';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-role" data-id='.$role->id.'>Hapus</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-role" data-id='.$role->id.'><span class="fa fa-edit"></span> ' . ucwords(__('ubah')) . '</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-danger" name="btn-destroy-role" data-id='.$role->id.'><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
             return $btn;
         })
         ->toJson();

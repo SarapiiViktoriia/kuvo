@@ -2,16 +2,21 @@
 	<label class="col-sm-3 control-label">Nama</label>
 	<div class="col-sm-9">
 		<input type="text" name="name" id="name" class="form-control" required/>
-		<label class="error" id="label_name"></label>
+		<span class="help-block text-muted">Wajib diisi.</span>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-12 control-label" for="inputSuccess">Permission</label>
-	@foreach($permissions as $key => $value)
-	<div class="col-md-6">
-		<label class="checkbox-inline">
-			<input type="checkbox" class="permission-checkboxes" id="permission_{{ $key }}" value="{{ $key }}" name="permissions[]"> {{ $value }}
-		</label>
+	<label class="col-sm-3 control-label" for="inputSuccess">Perizinan</label>
+	<div class="col-sm-9">
+		<div class="row">
+			@foreach ($permissions as $key => $value)
+				<div class="col-md-6">
+					<div class="checkbox-custom checkbox-default">
+						<input type="checkbox" class="permission-checkboxes" id="permission_{{ $key }}" value="{{ $key }}" name="permissions[]">
+						<label> {{ $value }}</label>
+					</div>
+				</div>
+			@endforeach
+		</div>
 	</div>
-	@endforeach
 </div>
