@@ -20,12 +20,12 @@
 					<li class="nav-parent">
 						<a>
 							<i class="fa fa-database" aria-hidden="true"></i>
-							<span>Data Master</span>
+							<span>{{ ucwords(__('manajemen produk')) }}</span>
 						</a>
 						<ul class="nav nav-children">
 							<li>
 								<a href="{{ route('items.index') }}">
-									Barang
+									{{ ucwords(__('manajemen produk')) }}
 								</a>
 							</li>
 							<li>
@@ -40,7 +40,7 @@
 							</li>
 							<li>
 								<a href="{{ route('item-brands.index') }}">
-									Brand Barang
+									{{ ucwords(__('manajemen brand produk')) }}
 								</a>
 							</li>
 						</ul>

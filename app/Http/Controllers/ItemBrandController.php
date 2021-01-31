@@ -11,8 +11,8 @@ class ItemBrandController extends Controller
         return Datatables::of($item_brands)
         ->addColumn('action', function ($item_brand) {
             $btn = '';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-item-brand" data-id='.$item_brand->id.'>Ubah</button>';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-item-brand" data-id='.$item_brand->id.'>Hapus</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-item-brand" data-id=' . $item_brand->id . '><span class="fa fa-edit"></span> ' . ucwords(__('ubah')) . '</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-danger" name="btn-destroy-item-brand" data-id=' . $item_brand->id . '><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
             return $btn;
         })
         ->make(true);
@@ -26,9 +26,7 @@ class ItemBrandController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
+        $this->validate($request, ['name' => 'required']);
         $item_brand = ItemBrand::create($request->all());
     }
     public function show($id)
@@ -39,9 +37,7 @@ class ItemBrandController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
+        $this->validate($request, ['name' => 'required']);
         $item_brand = ItemBrand::find($id);
         $item_brand->update($request->all());
     }
@@ -49,10 +45,11 @@ class ItemBrandController extends Controller
     {
         $item_brand = ItemBrand::find($id);
         if ($item_brand->items->count() > 0) {
-            return response()->json(['message' => 'Brand '.$item_brand->name.' masih dimiliki oleh barang', 'status' => 'canceled']);
-        }else{
+            return response()->json(['message' => 'Brand ' . $item_brand->name . ' masih dimiliki oleh barang', 'status' => 'canceled']);
+        }
+        else {
             $item_brand->delete();
-            return response()->json(['message' => 'Brand '.$item_brand->name.' berhasil dihapus', 'status' => 'destroyed']);
+            return response()->json(['message' => 'Brand ' . $item_brand->name . ' berhasil dihapus', 'status' => 'destroyed']);
         }
     }
 }
