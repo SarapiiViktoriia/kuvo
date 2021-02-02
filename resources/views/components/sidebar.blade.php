@@ -35,7 +35,7 @@
 							</li>
 							<li>
 								<a href="{{ route('item-groups.index') }}">
-									Grup Barang
+									{{ ucwords(__('manajemen kategori produk')) }}
 								</a>
 							</li>
 							<li>
