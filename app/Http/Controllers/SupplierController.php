@@ -11,8 +11,8 @@ class SupplierController extends Controller
         return Datatables::of($suppliers)
         ->addColumn('action', function ($supplier) {
             $btn = '';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-supplier" data-id='.$supplier->id.'>Ubah</button>';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-supplier" data-id='.$supplier->id.'>Hapus</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-supplier" data-id='.$supplier->id.'><span class="fa fa-edit"></span> ' . ucwords(__('ubah')) . '</button>';
+                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-danger" name="btn-destroy-supplier" data-id='.$supplier->id.'><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
             return $btn;
         })
         ->make(true);

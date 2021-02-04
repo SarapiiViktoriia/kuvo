@@ -30,7 +30,7 @@
 							</li>
 							<li>
 								<a href="{{ route('suppliers.index') }}">
-									Supplier
+									{{ ucwords(__('manajemen pemasuk produk')) }}
 								</a>
 							</li>
 							<li>
