@@ -16,9 +16,9 @@ class ItemController extends Controller
         })
         ->addColumn('action', function ($item) {
             $btn = '';
-            $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default" name="btn-show-item" data-id='.$item->id.'>Detail</button>';
-            $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-item" data-id='.$item->id.'>Ubah</button>';
-            $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-item" data-id='.$item->id.'>Hapus</button>';
+            $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default" name="btn-show-item" data-id="'.$item->id.'">Detail</button>';
+            $btn .= '<a href="' . route('items.edit', $item->id) . '" class="mb-xs mt-xs mr-xs btn btn-sm btn-info">Ubah</a>';
+            $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-item" data-id="'.$item->id.'">Hapus</button>';
             return $btn;
         })
         ->make(true);
@@ -48,6 +48,7 @@ class ItemController extends Controller
         ]);
         $item = Item::create($request->except('supplier_id'));
         $item->suppliers()->sync($request->supplier_id ? $request->supplier_id : []);
+        return redirect()->route('items.index');
     }
     public function show($id)
     {
@@ -59,6 +60,11 @@ class ItemController extends Controller
     }
     public function edit($id)
     {
+        $data['item']        = Item::find($id);
+        $data['item_brands'] = \App\Models\ItemBrand::pluck('name', 'id');
+        $data['item_groups'] = \App\Models\ItemGroup::pluck('name', 'id');
+        $data['suppliers']   = \App\Models\Supplier::pluck('name', 'id');
+        return view('items.edit', $data);
     }
     public function update(Request $request, $id)
     {
@@ -72,6 +78,7 @@ class ItemController extends Controller
         $item = Item::find($id);
         $item->update($request->except('supplier_id'));
         $item->suppliers()->sync($request->supplier_id ? $request->supplier_id : []);
+        return redirect()->route('items.index');
     }
     public function destroy($id)
     {
