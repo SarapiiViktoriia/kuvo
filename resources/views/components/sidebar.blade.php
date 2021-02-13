@@ -45,6 +45,19 @@
 							</li>
 						</ul>
 					</li>
+					<li class="nav-parent">
+						<a>
+							<i class="fa fa-book"></i>
+							<span>{{ ucwords(__('kontak')) }}</span>
+						</a>
+						<ul class="nav nav-children">
+							<li>
+								<a href="{{ route('companies.index') }}">
+									{{ ucwords(__('daftar perusahaan')) }}
+								</a>
+							</li>
+						</ul>
+					</li>
 					<hr>
 					<li class="nav-parent">
 						<a>
