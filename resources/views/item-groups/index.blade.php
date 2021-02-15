@@ -43,17 +43,17 @@
 		$(document).ready(function () {
 			function fetch_item_groups(form, selected, disabled) {
 				$.ajax({
-					url: '{{ route('ajax.fetch_item_groups') }}',
+					url: '{{ route('api.item-groups.index') }}',
 					method: 'GET',
 					success: function(response) {
 						$('select[name="parent_id"]', form).empty();
 						$('select[name="parent_id"]', form).append($('<option value="">Induk kategori ...</option>'));
-						$.each(response.item_groups, function(key, value) {
+						$.each(response.data, function(key, value) {
 							if (key == disabled) {
-								$('select[name="parent_id"]', form).append($('<option value="'+key+'" disabled>' + value + '</option>'));
+								$('select[name="parent_id"]', form).append($('<option value="'+value.id+'" disabled>' + value.name + '</option>'));
 							}
 							else {
-								$('select[name="parent_id"]', form).append($('<option value="'+key+'">' + value + '</option>'));
+								$('select[name="parent_id"]', form).append($('<option value="'+value.id+'">' + value.name + '</option>'));
 							}
 						});
 						if (selected) {
@@ -130,7 +130,7 @@
 				});
 				cleanModal('#form-edit-item-group', false);
 				fetch_item_groups('#form-edit-item-group', selected, $(this).data('id'));
-				$('#form-edit-item-group').attr('action', APP_URL + '/item-groups/'+ $(this).data('id'));
+				$('#form-edit-item-group').attr('action', APP_URL + '/api/item-groups/'+ $(this).data('id'));
 				$('#modal-edit-item-group').modal('show');
 			});
 			$('#btn-edit-item-group').click(function () {
@@ -169,7 +169,7 @@
 				});
 			});
 			$('#item_groups-table tbody').on('click', 'button[name="btn-destroy-item-group"]', function() {
-				$('#form-destroy-item-group').attr('action', APP_URL + '/item-groups/'+ $(this).data('id'));
+				$('#form-destroy-item-group').attr('action', APP_URL + '/api/item-groups/'+ $(this).data('id'));
 				$('#modal-destroy-item-group').modal('show');
 			});
 			$('#btn-destroy-item-group').click(function () {
@@ -180,7 +180,7 @@
 					data: form.serialize(),
 					success: function(response) {
 						$('#modal-destroy-item-group').modal('hide');
-						if (response.status == 'destroyed') {
+						if (response.status == 'success') {
 							new PNotify({
 								title: 'Sukses!',
 								text: response.message,

@@ -3,7 +3,7 @@
 'modal_title' => 'Ubah Kategori Produk',
 ])
 	@slot('modal_body')
-		<form method="PUT" action="{{ route('item-groups.update', 0) }}" id="form-edit-item-group">
+		<form method="PUT" action="{{ route('api.item-groups.update', 0) }}" id="form-edit-item-group">
 			@csrf
 			@include('item-groups._form')
 	@endslot
