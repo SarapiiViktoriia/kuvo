@@ -90,7 +90,7 @@
 						}
 					}
 				});
-				$('#form-edit-item-brand').attr('action', APP_URL + '/item-brands/'+ $(this).data('id'));
+				$('#form-edit-item-brand').attr('action', APP_URL + '/api/item-brands/'+ $(this).data('id'));
 				$('#modal-edit-item-brand').modal('show');
 			});
 			$('#modal-edit-item-brand').on('shown.bs.modal', function() {
@@ -132,7 +132,7 @@
 				});
 			});
 			$('#item_brands-table tbody').on('click', 'button[name="btn-destroy-item-brand"]', function() {
-				$('#form-destroy-item-brand').attr('action', APP_URL + '/item-brands/'+ $(this).data('id'));
+				$('#form-destroy-item-brand').attr('action', APP_URL + '/api/item-brands/'+ $(this).data('id'));
 				$('#modal-destroy-item-brand').modal('show');
 			});
 			$('#btn-destroy-item-brand').click(function () {
@@ -143,7 +143,7 @@
 					data: form.serialize(),
 					success: function(response) {
 						$('#modal-destroy-item-brand').modal('hide');
-						if (response.status == 'destroyed') {
+						if (response.status == 'success') {
 							new PNotify({
 								title: 'Sukses!',
 								text: response.message,

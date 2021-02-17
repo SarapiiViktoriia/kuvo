@@ -3,7 +3,7 @@
 'modal_title' => 'Tambah Brand Barang',
 ])
 	@slot('modal_body')
-		<form method="POST" action="{{ route('item-brands.store') }}" id="form-add-item-brand">
+		<form method="POST" action="{{ route('api.item-brands.store') }}" id="form-add-item-brand">
 			@csrf
 			@include('item-brands._form')
 		</form>
