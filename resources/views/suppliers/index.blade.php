@@ -91,7 +91,7 @@
 						}
 					}
 				});
-				$('#form-edit-supplier').attr('action', APP_URL + '/suppliers/'+ $(this).data('id'));
+				$('#form-edit-supplier').attr('action', APP_URL + '/api/suppliers/'+ $(this).data('id'));
 				$('#modal-edit-supplier').modal('show');
 			});
 			$('#modal-edit-supplier').on('shown.bs.modal', function() {
@@ -133,7 +133,7 @@
 				});
 			});
 			$('#suppliers-table tbody').on('click', 'button[name="btn-destroy-supplier"]', function() {
-				$('#form-destroy-supplier').attr('action', APP_URL + '/suppliers/'+ $(this).data('id'));
+				$('#form-destroy-supplier').attr('action', APP_URL + '/api/suppliers/'+ $(this).data('id'));
 				$('#modal-destroy-supplier').modal('show');
 			});
 			$('#btn-destroy-supplier').click(function () {
@@ -144,7 +144,7 @@
 					data: form.serialize(),
 					success: function(response) {
 						$('#modal-destroy-supplier').modal('hide');
-						if (response.status == 'destroyed') {
+						if (response.status == 'success') {
 							new PNotify({
 								title: 'Sukses!',
 								text: response.message,

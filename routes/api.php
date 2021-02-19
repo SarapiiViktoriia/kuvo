@@ -6,4 +6,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['as' => 'api.'], function(){
 	Route::apiResource('item-brands', 'Api\ApiItemBrandController');
 	Route::apiResource('item-groups', 'Api\ApiItemGroupController');
+	Route::apiResource('suppliers', 'Api\ApiSupplierController');
 });

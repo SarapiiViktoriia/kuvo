@@ -2,7 +2,7 @@
 ['modal_id'   => 'modal-add-supplier',
 'modal_title' => 'Tambah Penyedia Produk'])
 	@slot('modal_body')
-		<form method="POST" action="{{ route('suppliers.store') }}" id="form-add-supplier">
+		<form method="POST" action="{{ route('api.suppliers.store') }}" id="form-add-supplier">
 			@csrf
 			@include('suppliers._form')
 		</form>
