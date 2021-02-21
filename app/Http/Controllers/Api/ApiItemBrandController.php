@@ -8,7 +8,7 @@ class ApiItemBrandController extends Controller
 {
     public function index()
     {
-        return ItemGroupResource::collection(ItemGroup::all());
+        return ItemBrandResource::collection(ItemBrand::all());
     }
     public function store(Request $request)
     {
@@ -39,7 +39,7 @@ class ApiItemBrandController extends Controller
     }
     public function destroy($id)
     {
-        $item_brand = ItemBrand::find($id);
+        $item_brand = ItemBrand::findOrFail($id);
         if ($item_brand->items->count() > 0) {
             return response()->json([
                 'status' => 'canceled',
