@@ -3,7 +3,7 @@
     <section class="body-sign">
         <div class="center-sign">
             <a class="logo pull-left">
-                <img src="{{ asset('assets/images/logo.png') }}" height="54" alt="Porto Admin" />
+                <img src="{{ asset('assets/images/logo-invoku.png') }}" height="54" alt="Invoku: sistem manajemen inventori">
             </a>
             <div class="panel panel-sign">
                 <div class="panel-title-sign mt-xl text-right">
