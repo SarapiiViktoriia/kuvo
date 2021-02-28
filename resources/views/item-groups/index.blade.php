@@ -1,8 +1,8 @@
-@extends('layouts.dashboard', ['page_title' => 'manajemen kategori produk'])
+@extends('layouts.dashboard', ['page_title' => 'manajemen produk'])
 @section('content')
 	<p class="lead">
-		Di sini kamu dapat mengatur kategori produk yang terdaftar.
-		Kamu dapat melihat daftar kategori yang terdaftar, menambahkan
+		Di sini kamu dapat mengatur kategori produk yang kamu sediakan.
+		Kamu dapat melihat daftar semua kategori, menambahkan
 		kategori baru, dan memperbarui informasi kategori produk.
 	</p>
 	@component('components.panel',
@@ -11,7 +11,7 @@
 		<div style="margin-bottom: 2em;">
 			<button class="btn btn-primary btn-model-add" data-toggle="modal" data-target="#modal-add-item-group">
 				<span class="fa fa-plus"></span>
-				{{ ucwords(__('tambah kategori')) }}
+				{{ ucwords(__('kategori baru')) }}
 			</button>
 		</div>
 		@component('components.datatable-ajax',
@@ -41,13 +41,20 @@
 	<script src="{{ asset('assets/vendor/select2/select2.js') }}"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			/* Tidak boleh menggunakan tombol enter pada form. */
+			$('form').bind("keypress", function(event) {
+				if (event.keyCode == 13 || event.which == 13) {
+					event.preventDefault();
+				}
+			});
+			/* Mengambil semua kategori produk. */
 			function fetch_item_groups(form, selected, disabled) {
 				$.ajax({
 					url: '{{ route('api.item-groups.index') }}',
 					method: 'GET',
 					success: function(response) {
 						$('select[name="parent_id"]', form).empty();
-						$('select[name="parent_id"]', form).append($('<option value="">Induk kategori ...</option>'));
+						$('select[name="parent_id"]', form).append($('<option value="">Pilih kategori induk ...</option>'));
 						$.each(response.data, function(key, value) {
 							if (key == disabled) {
 								$('select[name="parent_id"]', form).append($('<option value="'+value.id+'" disabled>' + value.name + '</option>'));
@@ -72,10 +79,12 @@
 					}
 				});
 			}
+			/* Menampilkan formulir penambahan resource. */
 			$('#modal-add-item-group').on('shown.bs.modal', function() {
 				cleanModal('#form-add-item-group', true);
 				fetch_item_groups('#form-add-item-group', null, null);
 			});
+			/* Memproses submisi formulir penambahan resource. */
 			$('#btn-add-item-group').click(function() {
 				var form = $('#form-add-item-group');
 				$.ajax({
@@ -87,7 +96,7 @@
 						table.ajax.reload();
 						new PNotify({
 							title: 'Sukses!',
-							text: 'Data grup barang berhasil ditambahkan.',
+							text: 'Kategori produk ' + response.data.name + ' berhasil ditambahkan.',
 							type: 'success',
 						});
 					},
@@ -111,6 +120,7 @@
 					}
 				});
 			});
+			/* Menampilkan formulir pengubahan data resource. */
 			$('#item_groups-table tbody').on('click', 'button[name="btn-edit-item-group"]', function() {
 				var data = table.row($(this).closest('tr')).data();
 				var selected = null;
@@ -133,6 +143,7 @@
 				$('#form-edit-item-group').attr('action', APP_URL + '/api/item-groups/'+ $(this).data('id'));
 				$('#modal-edit-item-group').modal('show');
 			});
+			/* Memproses data submisi pengubahan resource. */
 			$('#btn-edit-item-group').click(function () {
 				var form = $('#form-edit-item-group');
 				$.ajax({
@@ -144,7 +155,7 @@
 						table.ajax.reload();
 						new PNotify({
 							title: 'Sukses!',
-							text: 'Data grup barang berhasil diubah.',
+							text: 'Kategori produk ' + response.data.name + ' berhasil diperbarui.',
 							type: 'success',
 						});
 					},
@@ -168,10 +179,12 @@
 					}
 				});
 			});
+			/* Menampilkan formulir penghapusan resource. */
 			$('#item_groups-table tbody').on('click', 'button[name="btn-destroy-item-group"]', function() {
 				$('#form-destroy-item-group').attr('action', APP_URL + '/api/item-groups/'+ $(this).data('id'));
 				$('#modal-destroy-item-group').modal('show');
 			});
+			/* Memproses data submisi penghapusan resource. */
 			$('#btn-destroy-item-group').click(function () {
 				var form = $('#form-destroy-item-group');
 				$.ajax({

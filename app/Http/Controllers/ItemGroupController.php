@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Http\Controllers\Api\ApiItemGroupController;
 use App\Models\ItemGroup;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -7,14 +8,13 @@ class ItemGroupController extends Controller
 {
     public function anyData()
     {
-        $item_groups = ItemGroup::leftJoin('item_groups as parent', 'item_groups.parent_id', '=', 'parent.id')
+        $models = ItemGroup::leftJoin('item_groups as parent', 'item_groups.parent_id', '=', 'parent.id')
             ->select('item_groups.*', 'parent.name as parent_name');
-        return Datatables::of($item_groups)
-            ->addColumn('action', function ($item_group) {
-                $btn = '';
-                    $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-item-group" data-id='.$item_group->id.'><span class="fa fa-edit"></span> ' . ucwords(__('ubah')) . '</button>';
-                    $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-danger" name="btn-destroy-item-group" data-id='.$item_group->id.'><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
-                return $btn;
+        return Datatables::of($models)
+            ->addColumn('action', function ($model) {
+                $button  = '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-default" name="btn-destroy-item-group" data-id=' . $model->id . '><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
+                $button .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-item-group" data-id=' . $model->id . '><span class="fa fa-edit"></span> ' . ucwords(__('perbarui')) . '</button>';
+                return $button;
             })
             ->filterColumn('parent_name', function ($query, $keyword){
                 $query->whereRaw('parent.name LIKE ?', ["%$keyword%"]);
@@ -35,10 +35,8 @@ class ItemGroupController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
-        $item_group = ItemGroup::create($request->all());
+        $api = new ApiItemGroupController;
+        $api->store($request);
     }
     public function show($id)
     {
@@ -48,23 +46,12 @@ class ItemGroupController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'parent_id' => 'not_in:'.$id
-        ]);
-        $item_group = ItemGroup::find($id);
-        $item_group->update($request->all());
+        $api = new ApiItemGroupController;
+        return $api->update($request, $id);
     }
     public function destroy($id)
     {
-        $parents    = ItemGroup::where('parent_id', $id)->count();
-        $item_group = ItemGroup::find($id);
-        if ($parents > 0) {
-            return response()->json(['message' => 'Grup Barang '.$item_group->name.' masih menjadi parent', 'status' => 'canceled']);
-        }
-        else {
-            $item_group->delete();
-            return response()->json(['message' => 'Grup Barang '.$item_group->name.' berhasil dihapus', 'status' => 'destroyed']);
-        }
+        $api = new ApiItemGroupController;
+        return $api->destroy($id);
     }
 }

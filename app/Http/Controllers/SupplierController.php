@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Http\Controllers\Api\ApiSupplierController;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -7,13 +8,12 @@ class SupplierController extends Controller
 {
     public function anyData()
     {
-        $suppliers = Supplier::all()->except(['created_at', 'updated_at']);
-        return Datatables::of($suppliers)
-        ->addColumn('action', function ($supplier) {
-            $btn = '';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-supplier" data-id='.$supplier->id.'><span class="fa fa-edit"></span> ' . ucwords(__('ubah')) . '</button>';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-danger" name="btn-destroy-supplier" data-id='.$supplier->id.'><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
-            return $btn;
+        $models = Supplier::query();
+        return Datatables::of($models)
+        ->addColumn('action', function ($model) {
+            $button  = '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-default" name="btn-destroy-supplier" data-id=' . $model->id . '><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
+            $button .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-info" name="btn-edit-supplier" data-id=' . $model->id . '><span class="fa fa-edit"></span> ' . ucwords(__('perbarui')) . '</button>';
+            return $button;
         })
         ->make(true);
     }
@@ -26,11 +26,8 @@ class SupplierController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'code' => 'required|unique:suppliers',
-            'name' => 'required',
-        ]);
-        $supplier = Supplier::create($request->all());
+        $api = new ApiSupplierController;
+        $api->store($request);
     }
     public function show($id)
     {
@@ -40,21 +37,12 @@ class SupplierController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'code' => 'required|unique:suppliers,code,'.$id,
-            'name' => 'required',
-        ]);
-        $supplier = Supplier::find($id);
-        $supplier->update($request->all());
+        $api = new ApiSupplierController;
+        return $api->update($request, $id);
     }
     public function destroy($id)
     {
-        $supplier = Supplier::find($id);
-        if ($supplier->items->count() > 0) {
-            return response()->json(['message' => 'Supplier '.$supplier->name.' masih menyuplai item', 'status' => 'canceled']);
-        }else{
-            $supplier->delete();
-            return response()->json(['message' => 'Supplier '.$supplier->name.' berhasil dihapus', 'status' => 'destroyed']);
-        }
+        $api = new ApiSupplierController;
+        return $api->destroy($id);
     }
 }
