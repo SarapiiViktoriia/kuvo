@@ -45,6 +45,43 @@
 							</li>
 						</ul>
 					</li>
+					<li class="nav-parent">
+						<a>
+							<i class="fa fa-book"></i>
+							<span>{{ ucwords(__('kontak')) }}</span>
+						</a>
+						<ul class="nav nav-children">
+							<li>
+								<a href="{{ route('companies.index') }}">
+									{{ ucwords(__('daftar perusahaan')) }}
+								</a>
+							</li>
+						</ul>
+					</li>
+					<hr>
+					<li class="nav-parent">
+						<a>
+							<i class="fa fa-users" aria-hidden="true"></i>
+							<span>{{ ucwords(__('manajemen akun')) }}</span>
+						</a>
+						<ul class="nav nav-children">
+							<li>
+								<a href="{{ route('users.index') }}">
+									{{ ucwords(__('manajemen pengguna')) }}
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('profiles.index') }}">
+									{{ ucwords(__('manajemen profil')) }}
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('roles.index') }}">
+									{{ ucwords(__('manajemen peran')) }}
+								</a>
+							</li>
+						</ul>
+					</li> --}}
 				</ul>
 			</nav>
 		</div>
