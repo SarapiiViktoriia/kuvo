@@ -32,7 +32,6 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'ajax/', 'as' => 'ajax.' ], f
 	Route::post('/get-roles', 'RoleController@anyData')->name('roles.data');
 	Route::post('/get-suppliers', 'SupplierController@anyData')->name('suppliers.data');
 	Route::post('/get-users', 'UserController@anyData')->name('users.data');
-	Route::post('/get-companies', 'CompanyController@anyData')->name('companies.data');
 });
 Route::group(['middleware' => 'auth'], function (){
 	Route::resource('inventory-units', 'InventoryUnitController');
@@ -45,5 +44,4 @@ Route::group(['middleware' => 'auth'], function (){
 	Route::resource('roles', 'RoleController');
 	Route::resource('suppliers', 'SupplierController');
 	Route::resource('users', 'UserController');
-	Route::resource('companies', 'CompanyController');
 });

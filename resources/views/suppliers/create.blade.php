@@ -1,14 +1,14 @@
 @component('components.modal',
 ['modal_id'   => 'modal-add-supplier',
-'modal_title' => 'tambah pemasok produk'])
+'modal_title' => 'Tambah Penyedia Produk'])
 	@slot('modal_body')
-		<form method="post" action="{{ route('suppliers.store') }}" id="form-add-supplier">
+		<form method="POST" action="{{ route('api.suppliers.store') }}" id="form-add-supplier">
 			@csrf
 			@include('suppliers._form')
 		</form>
 	@endslot
 	@slot('modal_button')
-		<button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-arrow-circle-left"></span> {{ ucwords(__('batal')) }}</button>
-		<button type="submit" class="btn btn-primary" id="btn-add-supplier"><span class="fa fa-save"></span> {{ ucwords(__('simpan')) }}</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+		<button type="submit" class="btn btn-primary" id="btn-add-supplier">Simpan</button>
 	@endslot
 @endcomponent

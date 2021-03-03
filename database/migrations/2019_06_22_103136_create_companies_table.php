@@ -8,8 +8,9 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code')->unique();
+            $table->string('code', 50)->unique();
             $table->string('name');
+            $table->enum('type', ['supplier', 'consumer', 'both']);
             $table->timestamps();
         });
     }

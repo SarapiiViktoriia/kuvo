@@ -23,6 +23,9 @@
                     <ul class="list-unstyled">
                         <li class="divider"></li>
                         <li>
+                            <a href="#" role="menuitem" tabindex="-1"><i class="fa fa-user"></i> Profilku</a>
+                        </li>
+                        <li>
                             <a href="{{ route('logout') }}" role="menuitem" tabindex="-1" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Keluar</a>
                             <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
                                 @csrf
