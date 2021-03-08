@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 class ItemController extends Controller
 {
+    public function __construct(){
+        $this->api = new \App\Http\Controllers\Api\ApiItemController;
+    }
     public function anyData()
     {
         $items = Item::with(['suppliers', 'itemBrand', 'itemGroup'])->selectRaw('distinct items.*');
@@ -39,15 +42,7 @@ class ItemController extends Controller
    }
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'code' => 'required|unique:items',
-            'name' => 'required',
-            'image_url' => 'nullable|url',
-            'item_group_id' => 'required',
-            'item_brand_id' => 'required'
-        ]);
-        $item = Item::create($request->except('supplier_id'));
-        $item->suppliers()->sync($request->supplier_id ? $request->supplier_id : []);
+        $this->api->store($request);
         return redirect()->route('items.index');
     }
     public function show($id)
@@ -68,24 +63,12 @@ class ItemController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'code' => 'required|unique:items,code,'.$id,
-            'name' => 'required',
-            'image_url' => 'nullable|url',
-            'item_group_id' => 'required',
-            'item_brand_id' => 'required'
-        ]);
-        $item = Item::find($id);
-        $item->update($request->except('supplier_id'));
-        $item->suppliers()->sync($request->supplier_id ? $request->supplier_id : []);
+        $this->api->update($request, $id);
         return redirect()->route('items.index');
     }
     public function destroy($id)
     {
-        $item = Item::find($id);
-        $item->suppliers()->detach();
-        $item->delete();
-        return response()->json(['message' => 'Barang '.$item->name.' berhasil dihapus', 'status' => 'destroyed']);
+        return $this->api->destroy($id);
     }
     public function fetchIdSuppliersForItem($id)
     {

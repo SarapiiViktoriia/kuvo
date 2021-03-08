@@ -29,7 +29,7 @@
 		@include('items.destroy')
 	@endcomponent
 @endsection
-@push('vendorstyle')
+@push('vendorstyles')
 	<link rel="stylesheet" href="{{ asset('assets/vendor/pnotify/pnotify.custom.css') }}">
 @endpush
 @push('appscripts')
@@ -176,7 +176,7 @@
 					data: form.serialize(),
 					success: function(response) {
 						$('#modal-destroy-item').modal('hide');
-						if (response.status == 'destroyed') {
+						if (response.status == 'success') {
 							new PNotify({
 								title: 'Sukses!',
 								text: response.message,
