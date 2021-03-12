@@ -13,14 +13,13 @@ class ApiItemController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'code' => 'required|unique:items',
+            'sku' => 'required|unique:items',
             'name' => 'required',
-            'image_url' => 'nullable|url',
             'item_group_id' => 'required',
-            'item_brand_id' => 'required'
+            'item_brand_id' => 'required',
+            'supplier_id' => 'required'
         ]);
-        $item = Item::create($request->except('supplier_id'));
-        $item->suppliers()->sync($request->supplier_id ? $request->supplier_id : []);
+        $item = Item::create($request->all());
     }
     public function show($id)
     {
@@ -33,15 +32,14 @@ class ApiItemController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'code' => 'required|unique:items,code,'.$id,
+            'sku' => 'required|unique:items,sku,'.$id,
             'name' => 'required',
-            'image_url' => 'nullable|url',
             'item_group_id' => 'required',
-            'item_brand_id' => 'required'
+            'item_brand_id' => 'required',
+            'supplier_id' => 'required'
         ]);
         $data = Item::findOrFail($id);
-        $data->update($request->except('supplier_id'));
-        $data->suppliers()->sync($request->supplier_id ? $request->supplier_id : []);
+        $data->update($request->all());
         return response()->json([
             'status' => 'success',
             'data' => $data
@@ -50,7 +48,6 @@ class ApiItemController extends Controller
     public function destroy($id)
     {
         $data = Item::findOrFail($id);
-        $data->suppliers()->detach();
         $data->delete();
         return response()->json([
             'status' => 'success',

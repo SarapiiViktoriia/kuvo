@@ -7,6 +7,7 @@ class ItemController extends Controller
 {
     public function __construct(){
         $this->api = new \App\Http\Controllers\Api\ApiItemController;
+        $this->company_api = new \App\Http\Controllers\Api\ApiCompanyController;
     }
     public function anyData()
     {
@@ -58,7 +59,7 @@ class ItemController extends Controller
         $data['item']        = Item::find($id);
         $data['item_brands'] = \App\Models\ItemBrand::pluck('name', 'id');
         $data['item_groups'] = \App\Models\ItemGroup::pluck('name', 'id');
-        $data['suppliers']   = \App\Models\Supplier::pluck('name', 'id');
+        $data['suppliers']   = \App\Models\Company::pluck('name', 'id');
         return view('items.edit', $data);
     }
     public function update(Request $request, $id)

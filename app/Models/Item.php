@@ -12,9 +12,9 @@ class Item extends Model
 	{
 		return $this->belongsTo('App\Models\ItemGroup');
 	}
-    public function suppliers()
+    public function supplier()
     {
-    	return $this->belongsToMany('App\Models\Supplier', 'supplier_has_items');
+    	return $this->belongsTo('App\Models\Company');
     }
     public function getDescriptionAttribute($value)
     {
@@ -24,8 +24,8 @@ class Item extends Model
     		return '-';
     	}
     }
-    public function setCodeAttribute($value)
+    public function setSkuAttribute($value)
     {
-    	$this->attributes['code'] = strtoupper($value);
+    	$this->attributes['sku'] = strtoupper($value);
     }
 }
