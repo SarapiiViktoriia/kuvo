@@ -16,6 +16,10 @@ class Item extends Model
 	{
 		return $this->belongsTo('App\Models\ItemGroup');
 	}
+    public function stocks()
+    {
+        return $this->hasMany('App\Models\Stock');
+    }
     public function supplier()
     {
     	return $this->belongsTo('App\Models\Company');
