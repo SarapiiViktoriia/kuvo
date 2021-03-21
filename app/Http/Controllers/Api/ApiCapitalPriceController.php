@@ -8,7 +8,7 @@ class ApiCapitalPriceController extends Controller
 {
     public function index()
     {
-        return CapitalPrice::collection(CapitalPrice::all());
+        return CapitalPriceResource::collection(CapitalPrice::all());
     }
     public function store(Request $request)
     {
