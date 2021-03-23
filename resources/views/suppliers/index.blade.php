@@ -1,23 +1,23 @@
-@extends('layouts.dashboard', ['page_title' => 'Manajemen Pemasok Produk'])
+@extends('layouts.dashboard', ['page_title' => 'manajemen produk'])
 @section('content')
 	<p class="lead">
-		Di sini kamu dapat mengatur penyedia produk (<em>supplier</em>)
-		yang terdaftar. Kamu dapat melihat daftar penyedia produk,
-		menambahkan penyedia baru, dan memperbarui informasi penyedia produk.
+		Di sini kamu dapat mengatur pemasok (<em>supplier</em>) yang terdaftar
+		dari produk yang kamu jual. Kamu dapat melihat daftar pemasok,
+		menambahkan pemasok baru, dan memperbarui informasi pemasok.
 	</p>
 	@component('components.panel',
 	['context'    => '',
-	'panel_title' => 'daftar penyedia produk'])
+	'panel_title' => 'daftar pemasok produk'])
 		<div style="margin-bottom: 2em;">
 			<button class="btn btn-primary btn-model-add" data-toggle="modal" data-target="#modal-add-supplier">
 				<span class="fa fa-plus"></span>
-				{{ ucwords(__('tambah penyedia')) }}
+				{{ ucwords(__('pemasok baru')) }}
 			</button>
 		</div>
 		@component('components.datatable-ajax',
 		['table_id'     => 'suppliers',
 		'table_headers' => ['kode', 'nama'],
-		'condition'     => TRUE,
+		'condition'     => true,
 		'data'          => [
 			['name' => 'code', 'data' => 'code'],
 			['name' => 'name', 'data' => 'name']]
@@ -40,6 +40,12 @@
 	<script src="{{ asset('assets/vendor/select2/select2.js') }}"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
+			/* Tidak boleh menggunakan tombol enter pada form. */
+			$('form').bind("keypress", function(event) {
+				if (event.keyCode == 13 || event.which == 13) {
+					event.preventDefault();
+				}
+			});
 			$('#modal-add-supplier').on('shown.bs.modal', function() {
 				cleanModal('#form-add-supplier', true);
 			});
@@ -54,7 +60,7 @@
 						table.ajax.reload();
 						new PNotify({
 							title: 'Sukses!',
-							text: 'Data supplier berhasil ditambahkan.',
+							text: response.data.name + ' berhasil ditambahkan dalam daftar pemasok.',
 							type: 'success',
 						});
 					},
@@ -108,7 +114,7 @@
 						table.ajax.reload();
 						new PNotify({
 							title: 'Sukses!',
-							text: 'Data supplier berhasil diubah.',
+							text: 'Informasi pemasok ' + response.data.name + ' berhasil diperbarui.',
 							type: 'success',
 						});
 					},

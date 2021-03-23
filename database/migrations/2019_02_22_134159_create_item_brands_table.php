@@ -8,7 +8,7 @@ class CreateItemBrandsTable extends Migration
     {
         Schema::create('item_brands', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->longText('description')->nullable();
             $table->timestamps();
         });

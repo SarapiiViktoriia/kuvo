@@ -1,12 +1,12 @@
 <table class="table table-bordered table-striped table-condensed" id="{{ $table_id }}-table" style="width: 100%;">
 	<thead>
 		<tr>
-			<th>No</th>
+			<th class="col-sm-1">No</th>
 			@foreach($table_headers as $table_header)
 				<th>{{ ucwords(e(__($table_header))) }}</th>
 			@endforeach
 			@if($condition)
-				<th class="text-center">{{ ucwords(e(__('action'))) }}</th>
+				<th class="col-sm-2">{{ ucwords(e(__('Aksi'))) }}</th>
 			@endif
 		</tr>
 	</thead>
