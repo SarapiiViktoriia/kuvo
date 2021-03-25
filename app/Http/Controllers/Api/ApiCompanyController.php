@@ -17,9 +17,16 @@ class ApiCompanyController extends Controller
             'name' => 'required'
         ]);
         if (count($request->type) == 2) {
-            $request->type == 'both';
+            $type = 'both';
         }
-        $data = Company::create($request->all());
+        else {
+            $type = implode(',', $request->type);
+        }
+        $data = Company::create([
+            'code' => $request->code,
+            'name' => $request->name,
+            'type' => $type
+        ]);
         return response()->json([
             'status' => 'success',
             'data' => $data

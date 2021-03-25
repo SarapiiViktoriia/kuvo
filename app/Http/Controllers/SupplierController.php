@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
-use App\Http\Controllers\Api\ApiSupplierController;
-use App\Models\Supplier;
+use App\Http\Controllers\Api\ApiCompanyController;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 class SupplierController extends Controller
 {
     public function anyData()
     {
-        $models = Supplier::query();
+        $models = Company::query()->whereIn('type', ['supplier', 'both']);
         return Datatables::of($models)
         ->addColumn('action', function ($model) {
             $button  = '<button type="button" class="mb-xs mt-xs mr-xs btn btn-xs btn-default" name="btn-destroy-supplier" data-id=' . $model->id . '><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
@@ -26,7 +26,7 @@ class SupplierController extends Controller
     }
     public function store(Request $request)
     {
-        $api = new ApiSupplierController;
+        $api = new ApiCompanyController;
         $api->store($request);
     }
     public function show($id)
@@ -37,12 +37,12 @@ class SupplierController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $api = new ApiSupplierController;
+        $api = new ApiCompanyController;
         return $api->update($request, $id);
     }
     public function destroy($id)
     {
-        $api = new ApiSupplierController;
+        $api = new ApiCompanyController;
         return $api->destroy($id);
     }
 }

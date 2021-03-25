@@ -25,22 +25,22 @@
 						<ul class="nav nav-children">
 							<li>
 								<a href="{{ route('items.index') }}">
-									{{ ucwords(__('manajemen produk')) }}
+									{{ ucwords(__('produk')) }}
 								</a>
 							</li>
 							<li>
 								<a href="{{ route('suppliers.index') }}">
-									{{ ucwords(__('manajemen pemasuk produk')) }}
+									{{ ucwords(__('pemasok')) }}
 								</a>
 							</li>
 							<li>
 								<a href="{{ route('item-groups.index') }}">
-									{{ ucwords(__('manajemen kategori produk')) }}
+									{{ ucwords(__('kategori produk')) }}
 								</a>
 							</li>
 							<li>
 								<a href="{{ route('item-brands.index') }}">
-									{{ ucwords(__('manajemen brand produk')) }}
+									{{ ucwords(__('brand produk')) }}
 								</a>
 							</li>
 						</ul>

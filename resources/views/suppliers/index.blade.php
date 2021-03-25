@@ -46,9 +46,17 @@
 					event.preventDefault();
 				}
 			});
+			/* Aksi untuk tombol penambahan supplier baru. */
 			$('#modal-add-supplier').on('shown.bs.modal', function() {
+				/* Menghapus isian formulir. */
 				cleanModal('#form-add-supplier', true);
+				/* Menandai kotak centang untuk supplier dan menjadikannya tidak dapat diubah lagi. */
+				$('#form-add-supplier #type_supplier:checkbox').prop('checked', true);
+				$('#form-add-supplier #type_supplier').prop('disabled', true);
+				/* Menghilangkan kotak centang consumer sehingga pengguna tidak kebingungan. */
+				$('#form-add-supplier #consumer_checkbox').remove();
 			});
+			/* Aksi tombol untuk submisi formulir penambahan supplier baru. */
 			$('#btn-add-supplier').click(function() {
 				var form = $('#form-add-supplier');
 				$.ajax({
@@ -84,20 +92,27 @@
 					}
 				});
 			});
+			/* Aksi tombol untuk memperbarui informasi supplier. */
 			$('#suppliers-table tbody').on('click', 'button[name="btn-edit-supplier"]', function() {
+				/* Ambil data supplier dari baris tombol yang ditekan. */
 				var data = table.row($(this).closest('tr')).data();
+				/* Mengisi nilai masing-masing bidang masukan formulir sesusai data yang diambil. */
 				$.each($('input, select, textarea', '#form-edit-supplier'), function() {
 					if ($(this).attr('id')) {
 						var id_element = $(this).attr('id');
 						if (data[id_element]) {
-							$('#'+id_element, '#form-edit-supplier').val(data[id_element]).trigger('change');
+							$('#' + id_element, '#form-edit-supplier').val(data[id_element]).trigger('change');
 						}
 						else {
-							$('#'+id_element, '#form-edit-supplier').val('').trigger('change');
+							$('#' + id_element, '#form-edit-supplier').val('').trigger('change');
 						}
 					}
 				});
-				$('#form-edit-supplier').attr('action', APP_URL + '/api/suppliers/'+ $(this).data('id'));
+				/* Membatasi data yang boleh diubah pengguna dengan menghilangkan bidang yang dilindungi. */
+				$('#modal-edit-supplier #div_code').remove();
+				$('#modal-edit-supplier #div_type').remove();
+				// $('#form-edit-supplier').attr('action', APP_URL + '/api/suppliers/'+ $(this).data('id'));
+				/* Menampilkan modal kepada pengguna. */
 				$('#modal-edit-supplier').modal('show');
 			});
 			$('#modal-edit-supplier').on('shown.bs.modal', function() {
