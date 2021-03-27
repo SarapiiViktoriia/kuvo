@@ -3,7 +3,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
-	protected $fillable = ['code', 'name', 'item_brand_id', 'item_group_id', 'image_url', 'description'];
+	protected $fillable = ['sku', 'name', 'item_brand_id', 'item_group_id', 'supplier_id', 'description'];
     public function capitalPrices()
     {
         return $this->hasMany('App\Models\CapitalPrice');

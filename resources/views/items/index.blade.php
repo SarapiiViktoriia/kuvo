@@ -9,41 +9,54 @@
 	['context'    => '',
 	'panel_title' => 'daftar produk'])
 		<div style="margin-bottom: 2em;">
-			<a href="{{ route('items.create') }}" class="btn btn-primary btn-modal-add">
+			<button class="btn btn-primary btn-model-add" data-toggle="modal" data-target="#modal-add-item">
 				<span class="fa fa-plus"></span>
-				{{ ucwords(__('tambah produk')) }}
-			</a>
+				{{ ucwords(__('produk baru')) }}
+			</button>
 		</div>
 		@component('components.datatable-ajax',
 		['table_id'     => 'items',
-		'table_headers' => ['kode', 'nama', ],
+		'table_headers' => ['sku', 'kategori', 'brand', 'nama', 'pemasok' ],
 		'condition'     => true,
 		'data'          => [
-			['name' => 'code', 'data' => 'code'],
-			['name' => 'name', 'data' => 'name']]
+			['name' => 'sku', 'data' => 'sku'],
+			['name' => 'itemGroup.name', 'data' => 'item_group.name'],
+			['name' => 'itemBrand.name', 'data' => 'item_brand.name'],
+			['name' => 'name', 'data' => 'name'],
+			['name' => 'supplier.name', 'data' => 'supplier.name']]
 		])
 				@slot('data_send_ajax')
 				@endslot
 		@endcomponent
 		@include('items.show')
 		@include('items.destroy')
+		@include('items.create')
+		@include('items.edit')
+		@include('items.show')
 	@endcomponent
 @endsection
 @push('vendorstyles')
 	<link rel="stylesheet" href="{{ asset('assets/vendor/pnotify/pnotify.custom.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/vendor/select2/select2.css') }}" />
 @endpush
 @push('appscripts')
 	<script src="{{ asset('assets/vendor/pnotify/pnotify.custom.js') }}"></script>
+	<script src="{{ asset('assets/vendor/select2/select2.js') }}"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			/*
+			/* Menggunakan select2 untuk semua pilihan. */
 			$('select').select2();
-			$('#modal-add-item').on(
-				'shown.bs.modal',
-				function() {
-					cleanModal('#form-add-item', true);
+			/* Tidak boleh menggunakan tombol enter pada form. */
+			$('form').bind("keypress", function(event) {
+				if (event.keyCode == 13 || event.which == 13) {
+					event.preventDefault();
 				}
-			);
+			});
+			/* Aksi untuk tombol penambahan produk baru. */
+			$('#modal-add-item').on('shown.bs.modal', function() {
+				cleanModal('#modal-add-item #form-add-item', true);
+			});
+			/* Aksi tombol untuk submisi formulir penambahan produk baru. */
 			$('#btn-add-item').click(function() {
 				var form = $('#form-add-item');
 				$.ajax({
@@ -55,7 +68,7 @@
 						table.ajax.reload();
 						new PNotify({
 							title: 'Sukses!',
-							text: 'Data grup barang berhasil ditambahkan.',
+							text: response.data.name + ' berhasil ditambahkan dalam daftar produk.',
 							type: 'success',
 						});
 					},
@@ -79,7 +92,7 @@
 					}
 				});
 			});
-			*/
+			/* Aksi untuk tombol melihat deatail produk. */
 			$('#items-table tbody').on('click', 'button[name="btn-show-item"]', function() {
 				var url = APP_URL + '/items/' + $(this).data('id');
 				$.ajax({
@@ -91,9 +104,11 @@
 				});
 				$('#modal-show-item').modal('show');
 			});
-			/*
+			/* Aksi tombol untuk memperbarui informasi produk. */
 			$('#items-table tbody').on('click', 'button[name="btn-edit-item"]', function() {
+				/* Ambil data produk dari baris tombol yang ditekan. */
 				var data = table.row($(this).closest('tr')).data();
+				/* Mengisi nilai masing-masing bidang masukan formulir sesusai data yang diambil. */
 				$.each($('input, select, textarea', '#form-edit-item'), function() {
 					if ($(this).attr('id')) {
 						var id_element = $(this).attr('id');
@@ -105,6 +120,8 @@
 						}
 					}
 				});
+				/* Membatasi data yang boleh diubah pengguna dengan menghilangkan bidang yang dilindungi. */
+				$('#modal-edit-item #div_sku').remove();
 				$('#form-edit-item').attr('action', APP_URL + '/items/' + $(this).data('id'));
 				cleanModal('#form-edit-item', false);
 				var url = APP_URL + '/ajax/fetch-id-suppliers-for-item/' + $(this).data('id');
@@ -163,7 +180,6 @@
 					}
 				});
 			});
-			*/
 			$('#items-table tbody').on('click', 'button[name="btn-destroy-item"]', function() {
 				$('#form-destroy-item').attr('action', APP_URL + '/items/' + $(this).data('id'));
 				$('#modal-destroy-item').modal('show');
