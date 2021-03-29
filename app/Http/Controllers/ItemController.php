@@ -19,6 +19,7 @@ class ItemController extends Controller
                 $button  = '';
                 $button .= '<button type="button" class="btn btn-default btn-xs mr-xs" name="btn-destroy-item" data-id="' . $item->id . '"><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
                 $button .= '<button type="button" class="btn btn-default btn-xs mr-xs" name="btn-edit-item" data-id="' . $item->id . '"><span class="fa fa-edit"></span> ' . ucwords(__('perbarui')) . '</button>';
+                $button .= '<button type="button" class="btn btn-primary btn-xs" name="btn-show-item" data-id="' . $item->id . '"><span class="fa fa-eye"></span> ' . ucwords(__('lihat')) . '</button>';
                 return $button;
             })
             ->make(true);
@@ -39,6 +40,8 @@ class ItemController extends Controller
     }
     public function show($id)
     {
+        $data['item'] = $this->item_api->show($id)->getData()->data;
+        return view('items._show', $data);
     }
     public function edit($id)
     {

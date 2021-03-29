@@ -4,17 +4,12 @@
 			<div class="plan">
 				<h3>{{ $item->name }}</h3>
 				<div>
-					@if($item->image_url)
-					<img src="{{ $item->image_url }}" style="max-height: 200px;">
-					@else
-					<img src="{{ asset('assets/images/device.png') }}" style="max-height: 200px;">
-					@endif
 				</div>
 				<ul>
-					<li>Kode: <b>{{ $item->code }}</b></li>
-					<li>Grup Barang: <b>{{ $item->itemGroup->name }}</b></li>
-					<li>Brand Barang: <b>{{ $item->itemBrand->name }}</b></li>
-					<li>Supplier: <b>{{ $suppliers }}</b></li>
+					<li>Kode: <b>{{ $item->sku }}</b></li>
+					<li>Grup Barang: <b>{{ $item->item_group->name }}</b></li>
+					<li>Brand Barang: <b>{{ $item->item_brand->name }}</b></li>
+					<li>Supplier: <b>{{ $item->supplier->name }}</b></li>
 					<li>Deskripsi: <b>{{ $item->description }}</b></li>
 				</ul>
 			</div>
