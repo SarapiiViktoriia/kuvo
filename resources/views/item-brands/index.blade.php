@@ -16,10 +16,11 @@
 		</div>
 		@component('components.datatable-ajax',
 		['table_id'     => 'item_brands',
-		'table_headers' => ['nama'],
+		'table_headers' => ['nama', 'deskripsi'],
 		'condition'     => true,
 		'data'          => [
-			['name' => 'name', 'data' => 'name']]
+			['name' => 'name', 'data' => 'name'],
+			['name' => 'description', 'data' => 'description']]
 		])
 			@slot('data_send_ajax')
 			@endslot

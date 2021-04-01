@@ -16,10 +16,9 @@
 		</div>
 		@component('components.datatable-ajax',
 		['table_id'     => 'items',
-		'table_headers' => ['sku', 'kategori', 'brand', 'nama', 'pemasok' ],
+		'table_headers' => ['kategori produk', 'merek produk', 'nama produk', 'supplier' ],
 		'condition'     => true,
 		'data'          => [
-			['name' => 'sku', 'data' => 'sku'],
 			['name' => 'itemGroup.name', 'data' => 'item_group.name'],
 			['name' => 'itemBrand.name', 'data' => 'item_brand.name'],
 			['name' => 'name', 'data' => 'name'],
