@@ -27,6 +27,7 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $api = new ApiCompanyController;
+        $request->request->add(['type' => ['supplier']]);
         $api->store($request);
     }
     public function show($id)
@@ -38,6 +39,7 @@ class SupplierController extends Controller
     public function update(Request $request, $id)
     {
         $api = new ApiCompanyController;
+        $request->request->add(['type' => ['supplier']]);
         return $api->update($request, $id);
     }
     public function destroy($id)
