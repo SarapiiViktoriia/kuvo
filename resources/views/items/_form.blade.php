@@ -2,7 +2,7 @@
 	<label class="col-sm-3 control-label">Kategori produk</label>
 	<div class="col-sm-9">
 		<select class="form-control" id="item_group_id" name="item_group_id">
-			<option>Pilih kategori ...</option>
+			<option value="">Pilih kategori ...</option>
 			@foreach ($item_groups as $item_group)
 				<option value="{{ $item_group->id }}">{{ $item_group->name }}</option>
 			@endforeach

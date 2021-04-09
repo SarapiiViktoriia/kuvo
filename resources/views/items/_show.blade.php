@@ -6,7 +6,6 @@
 				<div>
 				</div>
 				<ul>
-					<li>Kode: <b>{{ $item->sku }}</b></li>
 					<li>Grup Barang: <b>{{ $item->item_group->name }}</b></li>
 					<li>Brand Barang: <b>{{ $item->item_brand->name }}</b></li>
 					<li>Supplier: <b>{{ $item->supplier->name }}</b></li>
