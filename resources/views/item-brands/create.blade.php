@@ -1,6 +1,6 @@
-@component('components.modal',
-['modal_id'   => 'modal-add-item-brand',
-'modal_title' => 'Tambah Brand Produk',
+@component('components.modal', [
+	'modal_id'    => 'modal-add-item-brand',
+	'modal_title' => 'Tambah Merek',
 ])
 	@slot('modal_body')
 		<form method="post" action="{{ route('item-brands.store') }}" id="form-add-item-brand">

@@ -1,9 +1,9 @@
-@component('components.modal',
-['modal_id'   => 'modal-edit-item-brand',
-'modal_title' => 'Perbarui Brand Produk',
+@component('components.modal', [
+	'modal_id'    => 'modal-edit-item-brand',
+	'modal_title' => 'Perbarui Informasi Merek',
 ])
 	@slot('modal_body')
-		<form method="PUT" action="{{ route('item-brands.update', 0) }}" id="form-edit-item-brand">
+		<form method="put" action="{{ route('item-brands.update', 0) }}" id="form-edit-item-brand">
 			@csrf
 			@include('item-brands._form')
 	@endslot

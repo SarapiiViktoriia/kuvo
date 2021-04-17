@@ -1,7 +1,7 @@
 <aside class="sidebar-left" id="sidebar-left">
 	<div class="sidebar-header">
-		<div class="sidebar-title">
-			Navigasi
+		<div class="sidebar-title text-muted">
+			{{ ucwords(e(__('navigasi'))) }}
 		</div>
 		<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
 			<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -14,7 +14,7 @@
 					<li>
 						<a href="{{ route('home') }}">
 							<i class="fa fa-home" aria-hidden="true"></i>
-							<span>Dashboard</span>
+							<span>{{ ucwords(e(__('dashboard'))) }}</span>
 						</a>
 					</li>
 					<li class="nav-parent">
