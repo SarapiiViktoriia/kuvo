@@ -1,9 +1,9 @@
-@component('components.modal',
-['modal_id'   => 'modal-add-item-group',
-'modal_title' => 'Tambah Kategori Produk',
+@component('components.modal', [
+	'modal_id'    => 'modal-add-item-group',
+	'modal_title' => 'tambah kategori produk',
 ])
 	@slot('modal_body')
-		<form method="POST" action="{{ route('api.item-groups.store') }}" id="form-add-item-group">
+		<form method="post" action="{{ route('item-groups.store') }}" id="form-add-item-group">
 			@csrf
 			@include('item-groups._form')
 		</form>

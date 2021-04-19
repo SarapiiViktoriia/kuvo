@@ -1,9 +1,9 @@
-@component('components.modal',
-['modal_id'   => 'modal-edit-item-group',
-'modal_title' => 'Perbarui Kategori Produk',
+@component('components.modal', [
+	'modal_id'    => 'modal-edit-item-group',
+	'modal_title' => 'perbarui informasi kategori produk',
 ])
 	@slot('modal_body')
-		<form method="PUT" action="{{ route('api.item-groups.update', 0) }}" id="form-edit-item-group">
+		<form method="put" action="{{ route('item-groups.update', 0) }}" id="form-edit-item-group">
 			@csrf
 			@include('item-groups._form')
 	@endslot
