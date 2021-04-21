@@ -1,6 +1,7 @@
-@component('components.modal',
-['modal_id'   => 'modal-add-supplier',
-'modal_title' => 'tambah pemasok produk'])
+@component('components.modal', [
+	'modal_id'    => 'modal-add-supplier',
+	'modal_title' => 'tambah pemasok produk'
+])
 	@slot('modal_body')
 		<form method="post" action="{{ route('suppliers.store') }}" id="form-add-supplier">
 			@csrf

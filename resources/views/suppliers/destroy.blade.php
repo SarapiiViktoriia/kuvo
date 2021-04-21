@@ -1,6 +1,6 @@
-@component('components.modal',
-['modal_id'   => 'modal-destroy-supplier',
-'modal_title' => 'penghapusan pemasok',
+@component('components.modal', [
+	'modal_id'    => 'modal-destroy-supplier',
+	'modal_title' => 'penghapusan supplier',
 ])
 	@slot('modal_body')
 		<form method="post" action="{{ route('suppliers.destroy', 0) }}" id="form-destroy-supplier">
