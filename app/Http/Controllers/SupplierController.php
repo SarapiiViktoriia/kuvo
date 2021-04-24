@@ -13,7 +13,7 @@ class SupplierController extends Controller
     }
     public function anyData()
     {
-        $models = $this->company_api->getByType('supplier');
+        $models = $this->company_api->getByType('supplier', false);
         return Datatables::of($models)
         ->addColumn('action', function ($model) {
             $button  = '<button type="button" class="btn btn-xs btn-link mb-xs mt-xs mr-xs" name="btn-destroy-supplier" data-id=' . $model->id . '><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';

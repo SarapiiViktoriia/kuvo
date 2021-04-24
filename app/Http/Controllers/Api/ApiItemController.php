@@ -18,8 +18,12 @@ class ApiItemController extends Controller
             'item_brand_id' => 'required',
             'supplier_id'   => 'required'
         ]);
-        $this->isDataExist($request->only(['name', 'item_brand_id']), null);
+        $this->isDataExist($request->only(['name', 'supplier_id']), null);
         $item = Item::create($request->all());
+        return response()->json([
+            'status' => 'success',
+            'data'   => $item
+        ]);
     }
     public function show($id)
     {
@@ -58,15 +62,38 @@ class ApiItemController extends Controller
     public function isDataExist($param, $item)
     {
         $is_exist = Item::where($param)->first();
-        if (($is_exist && is_null($item) ) || ($item && $is_exist->id != $item->id)) {
-            return response()->json([
-                'message' => 'The given data was invalid',
-                'errors' => [
-                    'name' => [
-                        'Produk '.$is_exist->name.' dengan merek '.$is_exist->itemBrand->name.' telah ada di sistem',
+        if ($is_exist) {
+            if (is_null($item)) {
+                return response()->json([
+                    'message' => 'Data yang diberikan tidak sah.',
+                    'errors'  => [
+                        'name' => ['Produk ' . $is_exist->name . ' dengan merek ' . $is_exist->itemBrand->name . ' telah terdaftar.']
                     ]
-                ]
-            ], 422)->throwResponse();        
+                ], 422)->throwResponse();
+            }
+            else if ($is_exist->id !== $item->id) {
+                return response()->json([
+                    'message' => 'Data yang diberikan tidak sah.',
+                    'errors'  => [
+                        'name' => ['Produk ' . $is_exist->name . ' dengan merek ' . $is_exist->itemBrand->name . ' telah terdaftar.']
+                    ]
+                ], 422)->throwResponse();
+            }
         }
+    }
+    public function query($relation = [])
+    {
+        if (isset($relation) || '' !== $relation) {
+            $data = Item::with($relation)->selectRaw('distinct items.*');
+        }
+        else {
+            $data = Item::query();
+        }
+        return $data;
+    }
+    public function getCapital($id)
+    {
+        $data  = Item::findOrFail($id)->capitalPrices->last();
+        return $data;
     }
 }

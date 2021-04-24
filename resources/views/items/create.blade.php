@@ -1,6 +1,6 @@
 @component('components.modal', [
 	'modal_id'    => 'modal-add-item',
-	'modal_title' => 'tambah produk'
+	'modal_title' => 'tambah produk baru'
 ])
 	@slot('modal_body')
 		<form action="{{ route('items.store') }}" method="post" id="form-add-item">

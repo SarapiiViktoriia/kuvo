@@ -76,12 +76,17 @@ class ApiCompanyController extends Controller
     }
     public function fetchSuppliers()
     {
-        $suppliers = Company::query()->whereIn('type', ['supplier', 'both']);
+        $suppliers = Company::whereIn('type', ['supplier', 'both'])->get();
         return CompanyResource::collection($suppliers);
     }
-    public function getByType($type)
+    public function getByType($type, $collection = true)
     {
-        $data = Company::query()->whereIn('type', [$type, 'both']);
-        return $data;
+        $data = Company::whereIn('type', [$type, 'both'])->get();
+        if (true == $collection) {
+            return CompanyResource::collection($data);
+        }
+        else {
+            return $data;
+        }
     }
 }
