@@ -6,19 +6,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" type="text/css">
+        <link href="//fonts.gstatic.com" rel="dns-prefetch">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
         @stack('webfonts')
-        <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ asset('assets/vendor/magnific-popup/magnific-popup.css') }}" type="text/css">
+        <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/vendor/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/vendor/nanoscroller/nanoscroller.css') }}" rel="stylesheet" type="text/css">
         @stack('vendorstyles')
-        <link rel="stylesheet" href="{{ asset('assets/stylesheets/theme.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ asset('assets/stylesheets/skins/default.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ asset('assets/stylesheets/theme-custom.css') }}" type="text/css">
+        <link href="{{ asset('assets/stylesheets/theme.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/stylesheets/skins/default.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/stylesheets/theme-custom.css') }}" rel="stylesheet" type="text/css">
         @stack('themestyles')
         @stack('appstyles')
-        <script src="{{ asset('js/modernizr.js')  }}"></script>
+        <script src="{{ asset('js/modernizr.js')  }}" style="text/javascript"></script>
         @stack('headscripts')
     </head>
     <body>
@@ -31,18 +32,13 @@
                     @yield('content')
                 </section>
             </div>
-            @include('components.rightbar')
         </section>
-        <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js') }}"></script>
-        <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/nanoscroller/nanoscroller.js') }}"></script>
-        <script src="{{ asset('assets/vendor/magnific-popup/magnific-popup.js') }}"></script>
-        <script src="{{ asset('assets/vendor/jquery-placeholder/jquery.placeholder.js') }}"></script>
-        @stack('vendorscripts')
-        <script src="{{ asset('assets/javascripts/theme.js') }}"></script>
-        <script src="{{ asset('assets/javascripts/theme.custom.js') }}"></script>
-        <script src="{{ asset('assets/javascripts/theme.init.js') }}"></script>
+        <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/vendor/nanoscroller/nanoscroller.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/vendor/magnific-popup/magnific-popup.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/vendor/jquery-placeholder/jquery.placeholder.js') }}" type="text/javascript"></script>
         <script type="text/javascript">
             $.ajaxSetup({
                 headers: {
@@ -51,6 +47,10 @@
             });
             var APP_URL = {!! json_encode(url('/')) !!};
         </script>
+        @stack('vendorscripts')
+        <script src="{{ asset('assets/javascripts/theme.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/javascripts/theme.custom.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/javascripts/theme.init.js') }}" type="text/javascript"></script>
         @stack('themescripts')
         @stack('appscripts')
     </body>

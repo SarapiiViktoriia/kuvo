@@ -10,7 +10,7 @@
             <section class="panel">
                 <div class="panel-body">
                     <p>
-                        Terdapat <strong>{{ \App\Models\Item::count() }} produk</strong>
+                        Terdapat <strong>{{ $item_count }} produk</strong>
                         yang terdaftar dalam sistem.
                     </p>
                     <p>
