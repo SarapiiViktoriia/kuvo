@@ -5,7 +5,7 @@ $factory->define(\App\Models\Item::class, function (Faker $faker) {
         'item_group_id' => $faker->numberBetween(1, 50),
         'item_brand_id' => $faker->numberBetween(1, 50),
         'supplier_id'   => $faker->numberBetween(1, 50),
-        'name'          => ucwors($faker->unique()->word()),
+        'name'          => ucwords($faker->unique()->word()),
         'description'   => $faker->paragraph()
     ];
 });
