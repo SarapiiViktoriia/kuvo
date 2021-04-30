@@ -1,19 +1,23 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\InventoryUnit;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 class InventoryUnitController extends Controller
 {
+    public function __construct()
+    {
+        $this->unit_api = new \App\Http\Controllers\Api\ApiUnitController;
+    }
     public function anyData()
     {
-        $inventory_units = InventoryUnit::select('inventory_units.*');
+        $inventory_units = $this->unit_api->query();
         return Datatables::of($inventory_units)
         ->addColumn('action', function ($inventory_unit) {
-            $btn = '';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-info" name="btn-edit-inventory-unit" data-id='.$inventory_unit->id.'>Ubah</button>';
-                $btn .= '<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-danger" name="btn-destroy-inventory-unit" data-id='.$inventory_unit->id.'>Hapus</button>';
-            return $btn;
+            $button  = '';
+            $button .= '<button type="button" class="btn btn-link btn-xs mb-xs mt-xs mr-xs" name="btn-destroy-inventory-unit" data-id=' . $inventory_unit->id . '><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
+            $button .= '<button type="button" class="btn btn-link btn-xs mb-xs mt-xs mr-xs" name="btn-edit-inventory-unit" data-id=' . $inventory_unit->id . '><span class="fa fa-edit"></span> ' . ucwords(__('perbarui')) . '</button>';
+            return $button;
         })
         ->make(true);
     }
@@ -26,10 +30,7 @@ class InventoryUnitController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
-        $inventory_unit = InventoryUnit::create($request->all());
+        return $this->unit_api->store($request);
     }
     public function show($id)
     {
@@ -39,25 +40,14 @@ class InventoryUnitController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
-        $inventory_unit = InventoryUnit::find($id);
-        $inventory_unit->update($request->all());
+        return $this->unit_api->update($request, $id);
     }
     public function destroy($id)
     {
-        $inventory_unit = InventoryUnit::find($id);
-        if (($inventory_unit->itemBundlings->count() > 0) || ($inventory_unit->itemStocks->count() > 0)) {
-            return response()->json(['message' => 'Inventory unit '.$inventory_unit->name.' masih berhubungan dengan data lain', 'status' => 'canceled']);
-        }else{
-            $inventory_unit->delete();
-            return response()->json(['message' => 'InventoryUnit '.$inventory_unit->name.' berhasil dihapus', 'status' => 'destroyed']);
-        }
+        return $this->unit_api->destroy($id);
     }
     public function fetchInventoryUnits()
     {
-        $inventory_units = InventoryUnit::pluck('name', 'id');
-        return response()->json(['inventory_units' => $inventory_units]);
+        return $this->unit_api->getUnits('inventory_units');
     }
 }

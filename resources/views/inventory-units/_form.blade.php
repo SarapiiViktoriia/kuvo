@@ -1,14 +1,14 @@
-<div class="form-group mt-lg" id="div_name">
-	<label class="col-sm-3 control-label">Nama</label>
+<div class="form-group" id="div-label">
+	<label class="control-label col-sm-3 text-right">{{ ucfirst(e(__('nama satuan'))) }}</label>
 	<div class="col-sm-9">
-		<input type="text" id="name" name="name" class="form-control" required/>
-		<label class="error" id="label_name"></label>
+		<input type="text" class="form-control" id="label" name="label" required>
+		<label class="error" id="error-label"></label>
 	</div>
 </div>
-<div class="form-group mt-lg" id="div_description">
-	<label class="col-sm-3 control-label">Deskripsi</label>
+<div class="form-group" id="div-pieces">
+	<label class="control-label col-sm-3 text-right">{{ ucfirst(e(__('jumlah satuan'))) }}</label>
 	<div class="col-sm-9">
-		<textarea name="description" id="description" class="form-control"></textarea>
-		<label class="error" id="label_description"></label>
+		<input type="number" class="form-control" id="pieces" name="pieces" required>
+		<label class="error" id="error-pieces"></label>
 	</div>
 </div>
