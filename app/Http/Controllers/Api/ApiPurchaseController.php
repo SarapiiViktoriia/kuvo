@@ -12,14 +12,15 @@ class ApiPurchaseController extends Controller
     }
     public function store(Request $request)
     {
+        $request['arrival_date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->arrival_date)->format('Y-m-d');
         $this->validate($request, [
-            'supplier_id' => 'required',
+            'supplier_id'  => 'required',
             'arrival_date' => 'required|date'
         ]);
         $data = Purchase::create($request->all());
         return response()->json([
             'status' => 'success',
-            'data' => $data
+            'data'   => $data
         ]);
     }
     public function show($id)

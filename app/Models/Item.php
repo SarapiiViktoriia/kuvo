@@ -24,6 +24,10 @@ class Item extends Model
     {
     	return $this->belongsTo('App\Models\Company');
     }
+    public function quantities()
+    {
+        return $this->hasMany('App\Models\ProductList');
+    }
     public function getDescriptionAttribute($value)
     {
     	if ($value) {

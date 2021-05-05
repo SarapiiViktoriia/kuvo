@@ -55,4 +55,14 @@ class ApiStockController extends Controller
             'data' => null
         ]);
     }
+    public function query($relation = [])
+    {
+        if (isset($relation) || '' !== $relation) {
+            $data = Stock::with($relation)->selectRaw('distinct stocks.*');
+        }
+        else {
+            $data = Stock::query();
+        }
+        return $data;
+    }
 }

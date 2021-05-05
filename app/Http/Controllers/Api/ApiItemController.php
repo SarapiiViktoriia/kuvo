@@ -27,7 +27,7 @@ class ApiItemController extends Controller
     }
     public function show($id)
     {
-        $data = Item::with(['itemGroup', 'itemBrand', 'supplier'])->findOrFail($id);
+        $data = Item::with(['itemGroup', 'itemBrand', 'supplier', 'quantities'])->findOrFail($id);
         return response()->json([
             'status' => 'success',
             'data'   => $data
