@@ -6,7 +6,6 @@ use Yajra\Datatables\Datatables;
 class ItemController extends Controller
 {
     public function __construct(){
-        $this->capital_api    = new \App\Http\Controllers\Api\ApiCapitalPriceController;
         $this->company_api    = new \App\Http\Controllers\Api\ApiCompanyController;
         $this->item_api       = new \App\Http\Controllers\Api\ApiItemController;
         $this->item_brand_api = new \App\Http\Controllers\Api\ApiItemBrandController;
@@ -14,19 +13,13 @@ class ItemController extends Controller
     }
     public function anyData()
     {
-        $items = $this->item_api->query(['supplier', 'itemBrand', 'itemGroup', 'capitalPrices']);
+        $items = Item::with(['supplier', 'itemBrand', 'itemGroup'])->selectRaw('distinct items.*');
         return Datatables::of($items)
-            ->addColumn('hpp', function (Item $item) {
-                return $item->capitalPrices->map(function ($price) {
-                    setlocale(LC_MONETARY, config('app.faker_locale'));
-                    return money_format('%n', $price->value);
-                })->last();
-            })
             ->addColumn('action', function ($item) {
                 $button  = '';
-                $button .= '<button type="button" class="btn btn-link btn-xs mr-xs" name="btn-destroy-item" data-id="' . $item->id . '"><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
-                $button .= '<button type="button" class="btn btn-link btn-xs mr-xs" name="btn-edit-item" data-id="' . $item->id . '"><span class="fa fa-edit"></span> ' . ucwords(__('perbarui')) . '</button>';
-                $button .= '<button type="button" class="btn btn-link btn-xs" name="btn-show-item" data-id="' . $item->id . '"><span class="fa fa-eye"></span> ' . ucwords(__('lihat')) . '</button>';
+                $button .= '<button type="button" class="btn btn-default btn-xs mr-xs" name="btn-destroy-item" data-id="' . $item->id . '"><span class="fa fa-trash-o"></span> ' . ucwords(__('hapus')) . '</button>';
+                $button .= '<button type="button" class="btn btn-default btn-xs mr-xs" name="btn-edit-item" data-id="' . $item->id . '"><span class="fa fa-edit"></span> ' . ucwords(__('perbarui')) . '</button>';
+                $button .= '<button type="button" class="btn btn-primary btn-xs" name="btn-show-item" data-id="' . $item->id . '"><span class="fa fa-eye"></span> ' . ucwords(__('lihat')) . '</button>';
                 return $button;
             })
             ->make(true);
@@ -35,7 +28,7 @@ class ItemController extends Controller
     {
         $data['item_brands'] = $this->item_brand_api->index();
         $data['item_groups'] = $this->item_group_api->index();
-        $data['suppliers']   = $this->company_api->getByType('supplier');
+        $data['suppliers']   = $this->company_api->fetchSuppliers();
         return view('items.index', $data);
     }
     public function create()
@@ -43,7 +36,7 @@ class ItemController extends Controller
     }
     public function store(Request $request)
     {
-        return $this->item_api->store($request);
+        $this->item_api->store($request);
     }
     public function show($id)
     {
@@ -55,7 +48,7 @@ class ItemController extends Controller
     }
     public function update(Request $request, $id)
     {
-        return $this->item_api->update($request, $id);
+        $this->item_api->update($request, $id);
     }
     public function destroy($id)
     {
@@ -63,10 +56,9 @@ class ItemController extends Controller
     }
     public function fetchIdSuppliersForItem($id)
     {
-        $data = $this->item_api->show($id)->getData()->data;
-        return response()->json([
-            'data' => $data
-        ]);
+        $item = Item::find($id);
+        $data['supplier_ids'] = $item->suppliers->pluck('id');
+        return response()->json(['supplier_ids' => $data['supplier_ids']]);
     }
     public function fetchItems()
     {

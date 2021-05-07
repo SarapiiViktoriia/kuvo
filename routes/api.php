@@ -8,6 +8,7 @@ Route::group(['as' => 'api.'], function(){
 	Route::apiResource('items', 'Api\ApiItemController');
 	Route::apiResource('item-brands', 'Api\ApiItemBrandController');
 	Route::apiResource('item-groups', 'Api\ApiItemGroupController');
+	Route::apiResource('product-lists', 'Api\ApiProductListController');
 	Route::apiResource('purchases', 'Api\ApiPurchaseController');
 	Route::apiResource('suppliers', 'Api\ApiSupplierController');
 });

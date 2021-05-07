@@ -1,7 +1,6 @@
-@component('components.modal', [
-	'modal_id'    => 'modal-edit-supplier',
-	'modal_title' => 'perbarui informasi pemasok'
-])
+@component('components.modal',
+['modal_id'   => 'modal-edit-supplier',
+'modal_title' => 'perbarui informasi pemasok'])
 	@slot('modal_body')
 		<form method="put" action="{{ route('suppliers.update', 0) }}" id="form-edit-supplier">
 			@csrf

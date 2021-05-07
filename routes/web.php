@@ -24,20 +24,15 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'ajax/', 'as' => 'ajax.' ], f
 	Route::get('/fetch-suppliers', 'SupplierController@fetchSuppliers')->name('fetch_suppliers');
 	Route::post('/get-inventory-units', 'InventoryUnitController@anyData')->name('inventory_units.data');
 	Route::post('/get-items', 'ItemController@anyData')->name('items.data');
-	Route::post('/get-item-brands', 'ItemBrandController@anyData')->name('item-brands.data');
+	Route::post('/get-item-brands', 'ItemBrandController@anyData')->name('item_brands.data');
 	Route::post('/get-item-bundlings', 'ItemBundlingController@anyData')->name('item_bundlings.data');
-	Route::post('/get-item-groups', 'ItemGroupController@anyData')->name('item-groups.data');
+	Route::post('/get-item-groups', 'ItemGroupController@anyData')->name('item_groups.data');
 	Route::post('/get-item-stocks', 'ItemStockController@anyData')->name('item_stocks.data');
 	Route::post('/get-profiles', 'ProfileController@anyData')->name('profiles.data');
 	Route::post('/get-roles', 'RoleController@anyData')->name('roles.data');
-	Route::post('/get-stocks', 'StockController@setDatatable')->name('stocks.data');
 	Route::post('/get-suppliers', 'SupplierController@anyData')->name('suppliers.data');
-	Route::post('/get-units', 'InventoryUnitController@anyData')->name('units.data');
 	Route::post('/get-users', 'UserController@anyData')->name('users.data');
 	Route::post('/get-companies', 'CompanyController@anyData')->name('companies.data');
-});
-Route::group([ 'middleware' => 'auth', 'prefix' => 'incoming-goods/', 'as' => 'incoming-goods.' ], function() {
-	Route::post('/choose-item', 'IncomingGoodController@chooseItem')->name('choose-item');
 });
 Route::group(['middleware' => 'auth'], function (){
 	Route::resource('inventory-units', 'InventoryUnitController');
@@ -48,9 +43,7 @@ Route::group(['middleware' => 'auth'], function (){
 	Route::resource('item-stocks', 'ItemStockController');
 	Route::resource('profiles', 'ProfileController');
 	Route::resource('roles', 'RoleController');
-	Route::resource('stocks', 'StockController');
 	Route::resource('suppliers', 'SupplierController');
 	Route::resource('users', 'UserController');
 	Route::resource('companies', 'CompanyController');
-	Route::resource('incoming-goods', 'IncomingGoodController');
 });

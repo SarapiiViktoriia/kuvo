@@ -1,23 +1,24 @@
 <?php
 namespace App\Http\Controllers\Api;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\StockResource;
-use App\Models\Stock;
-class ApiStockController extends Controller
+use App\Http\Resources\ProductListResource;
+use App\Models\ProductList;
+use Illuminate\Http\Request;
+class ApiProductListController extends Controller
 {
     public function index()
     {
-        return StockResource::collection(Stock::all());
+        return ProductListResource::collection(ProductList::all());
     }
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'item_id' => 'required',
-            'unit_id' => 'required',
+            'count' => 'required|numeric',
+            'quantifiable_type' => 'required|in:App\Purchase',
+            'quantifiable_id' => 'required|numeric',
         ]);
-        $request->count = 0;
-        $data = Stock::create($request->all());
+        $data = ProductList::create($request->all());
         return response()->json([
             'status' => 'success',
             'data' => $data
@@ -25,7 +26,7 @@ class ApiStockController extends Controller
     }
     public function show($id)
     {
-        $data = Stock::findOrFail($id);
+        $data = ProductList::findOrFail($id);
         return response()->json([
             'status' => 'success',
             'data' => $data
@@ -33,12 +34,13 @@ class ApiStockController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $this->validate([
+        $request->validate([
             'item_id' => 'required',
-            'unit_id' => 'required',
+            'count' => 'required|numeric',
+            'quantifiable_type' => 'required|in:App\Purchase',
+            'quantifiable_id' => 'required|numeric',
         ]);
-        $request->count = 0;
-        $data = Stock::findOrFail($id);
+        $data = ProductList::findOrFail($id);
         $data->update($request->all());
         return response()->json([
             'status' => 'success',
@@ -47,7 +49,7 @@ class ApiStockController extends Controller
     }
     public function destroy($id)
     {
-        $data = Stock::findOrFail($id);
+        $data = ProductList::findOrFail($id);
         $data->delete();
         return response()->json([
             'status' => 'success',

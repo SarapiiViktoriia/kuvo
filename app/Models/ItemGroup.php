@@ -8,10 +8,6 @@ class ItemGroup extends Model
     {
     	return $this->belongsTo('App\Models\ItemGroup');
     }
-    public function items()
-	{
-		return $this->hasMany('App\Models\Item');
-	}
     public function getDescriptionAttribute($value)
     {
     	if ($value) {

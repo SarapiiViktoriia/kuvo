@@ -1,7 +1,7 @@
 <aside class="sidebar-left" id="sidebar-left">
 	<div class="sidebar-header">
-		<div class="sidebar-title text-muted">
-			{{ ucwords(e(__('navigasi'))) }}
+		<div class="sidebar-title">
+			Navigasi
 		</div>
 		<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
 			<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -14,22 +14,9 @@
 					<li>
 						<a href="{{ route('home') }}">
 							<i class="fa fa-home" aria-hidden="true"></i>
-							<span>{{ ucwords(e(__('dashboard'))) }}</span>
+							<span>Dashboard</span>
 						</a>
 					</li>
-					<li>
-						<a href="{{ route('stocks.index') }}">
-							<i class="fa fa-cubes" aria-hidden="true"></i>
-							<span>{{ ucwords(e(__('stok produk'))) }}</span>
-						</a>
-					</li>
-					<li>
-						<a href="{{ route('incoming-goods.create') }}">
-							<i class="fa fa-download"></i>
-							<span>{{ ucwords(e(__('kedatangan barang'))) }}</span>
-						</a>
-					</li>
-					<hr>
 					<li class="nav-parent">
 						<a>
 							<i class="fa fa-database" aria-hidden="true"></i>
@@ -56,11 +43,6 @@
 									{{ ucwords(__('merek produk')) }}
 								</a>
 							</li>
-							<li>
-								<a href="{{ route('inventory-units.index') }}">
-									{{ ucwords(__('satuan')) }}
-								</a>
-							</li>
 						</ul>
 					</li>
 					<li class="nav-parent">
@@ -76,6 +58,30 @@
 							</li>
 						</ul>
 					</li>
+					<hr>
+					<li class="nav-parent">
+						<a>
+							<i class="fa fa-users" aria-hidden="true"></i>
+							<span>{{ ucwords(__('manajemen akun')) }}</span>
+						</a>
+						<ul class="nav nav-children">
+							<li>
+								<a href="{{ route('users.index') }}">
+									{{ ucwords(__('manajemen pengguna')) }}
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('profiles.index') }}">
+									{{ ucwords(__('manajemen profil')) }}
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('roles.index') }}">
+									{{ ucwords(__('manajemen peran')) }}
+								</a>
+							</li>
+						</ul>
+					</li> --}}
 				</ul>
 			</nav>
 		</div>

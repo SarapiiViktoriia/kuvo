@@ -8,19 +8,16 @@ class CreateProductListsTable extends Migration
     {
         Schema::create('product_lists', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('item_id')->unsigned();
+            $table->unsignedInteger('item_id');
             $table->integer('count');
-            $table->integer('quantifiable_id')->unsigned();
-            $table->string('quantifiable_type');
+            $table->morphs('quantifiable');
             $table->timestamps();
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('item_id')
+            ->references('id')->on('items');
         });
     }
     public function down()
     {
-        Schema::table('product_lists', function (Blueprint $table) {
-            $table->dropForeign('product_lists_item_id_foreign');
-        });
         Schema::dropIfExists('product_lists');
     }
 }

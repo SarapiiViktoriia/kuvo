@@ -6,6 +6,6 @@ class Company extends Model
     protected $guarded = [];
     public function items()
     {
-        return $this->hasMany('App\Models\Item', 'supplier_id');
+        return $this->hasMany('App\Models\Item');
     }
 }

@@ -1,6 +1,6 @@
-@component('components.modal', [
-	'modal_id'    => 'modal-destroy-item-group',
-	'modal_title' => 'hapus kategori produk',
+@component('components.modal',
+['modal_id'   => 'modal-destroy-item-group',
+'modal_title' => 'Hapus Kategori Produk',
 ])
 	@slot('modal_body')
 		<form method="post" action="{{ route('item-groups.destroy', 0) }}" id="form-destroy-item-group">

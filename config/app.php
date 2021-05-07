@@ -1,14 +1,14 @@
 <?php
 return [
-    'name' => env('APP_NAME', 'Invoku'),
+    'name' => env('APP_NAME', 'Laravel'),
     'env' => env('APP_ENV', 'production'),
     'debug' => env('APP_DEBUG', false),
     'url' => env('APP_URL', 'http:
     'asset_url' => env('ASSET_URL', null),
-    'timezone' => 'Asia/Jakarta',
-    'locale' => 'id',
+    'timezone' => 'UTC',
+    'locale' => 'en',
     'fallback_locale' => 'en',
-    'faker_locale' => 'id_ID',
+    'faker_locale' => 'en_US',
     'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
     'providers' => [

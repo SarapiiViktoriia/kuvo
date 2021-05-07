@@ -46,7 +46,7 @@ class ApiItemBrandController extends Controller
         if ($item_brand->items->count() > 0) {
             return response()->json([
                 'status'  => 'canceled',
-                'message' => 'Merek ' . $item_brand->name . ' masih digunakan dalam produk.',
+                'message' => 'Brand ' . $item_brand->name . ' masih digunakan dalam produk.',
                 'data'    => null
             ]);
         }
@@ -54,19 +54,9 @@ class ApiItemBrandController extends Controller
             $item_brand->delete();
             return response()->json([
                 'status'  => 'success',
-                'message' => 'Merek ' . $item_brand->name . ' berhasil dihapus',
+                'message' => 'Brand ' . $item_brand->name . ' berhasil dihapus',
                 'data'    => null
             ]);
         }
-    }
-    public function query($relation = [])
-    {
-        if (isset($relation) || '' !== $relation) {
-            $data = ItemBrand::with($relation)->selectRaw('distinct item_brands.*');
-        }
-        else {
-            $data = ItemBrand::query();
-        }
-        return $data;
     }
 }

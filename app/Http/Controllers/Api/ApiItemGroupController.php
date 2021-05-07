@@ -53,34 +53,12 @@ class ApiItemGroupController extends Controller
             ]);
         }
         else {
-            if ($data->items->count() > 0) {
-                return response()->json([
-                    'status'  => 'canceled',
-                    'message' => 'Kategori produk ' . $data->name . ' masih digunakan dalam produk.',
-                    'data'    => null
-                ]);
-            }
-            else {
-                $data->delete();
-                return response()->json([
-                    'status'  => 'success',
-                    'message' => 'Kategori produk ' . $data->name . ' berhasil dihapus.',
-                    'data'    => null
-                ]);
-            }
+            $data->delete();
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Kategori produk ' . $data->name . ' berhasil dihapus.',
+                'data'    => null
+            ]);
         }
-    }
-    public function query()
-    {
-        $data = ItemGroup::
-            leftJoin('item_groups as parent', 'item_groups.parent_id', '=', 'parent.id')
-            ->select('item_groups.*', 'parent.name as parent_name');
-        return $data;
-    }
-    public function getByColumn($columns = [])
-    {
-        $columns = implode(', ', $columns);
-        $data = ItemGroup::pluck($columns);
-        return $data;
     }
 }
