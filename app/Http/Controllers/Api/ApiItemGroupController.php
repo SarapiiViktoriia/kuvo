@@ -45,12 +45,20 @@ class ApiItemGroupController extends Controller
     {
         $parents = ItemGroup::where('parent_id', $id)->count();
         $data    = ItemGroup::findOrFail($id);
-        if ($parents > 0) {
-            return response()->json([
-                'status'  => 'canceled',
-                'message' => 'Kategori produk ' . $data->name . ' merupakan induk kategori.',
-                'data'    => null
-            ]);
+        if ($parents > 0 || $data->items()->count() > 0) {
+            if ($parents > 0) {
+                return response()->json([
+                    'status'  => 'canceled',
+                    'message' => 'Kategori produk ' . $data->name . ' merupakan induk kategori.',
+                    'data'    => null
+                ]);
+            }else{
+                return response()->json([
+                    'status'  => 'canceled',
+                    'message' => 'Kategori produk ' . $data->name . ' masih dimiliki produk yang lain.',
+                    'data'    => null
+                ]);
+            }        
         }
         else {
             $data->delete();

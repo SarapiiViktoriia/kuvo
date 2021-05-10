@@ -4,6 +4,10 @@ use Illuminate\Database\Eloquent\Model;
 class ItemGroup extends Model
 {
     protected $fillable = ['parent_id', 'name', 'description'];
+    public function items()
+    {
+        return $this->hasMany('App\Models\Item');
+    }
     public function parent()
     {
     	return $this->belongsTo('App\Models\ItemGroup');
